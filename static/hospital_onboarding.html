@@ -1,0 +1,503 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Hospital Partnership | Medora AI Network</title>
+    <link rel="icon"
+        href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>🏥</text></svg>">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link
+        href="https://fonts.googleapis.com/css2?family=plus+jakarta+sans:wght@300;400;500;600;700&family=inter:wght@300;400;500;600&display=swap"
+        rel="stylesheet">
+    <link rel="stylesheet" href="/static/css/styles.css">
+
+    <style>
+        /* Page-Specific Overrides for Ultra-Premium Feel */
+        body {
+            overflow: hidden;
+            /* For split layout */
+            background: radial-gradient(circle at 10% 20%, #1a1a1a 0%, #000000 90%);
+        }
+
+        .split-layout {
+            display: grid;
+            grid-template-columns: 1fr 1.2fr;
+            min-height: 100vh;
+        }
+
+        /* Left Side: Brand & Value Prop */
+        .brand-panel {
+            position: relative;
+            padding: var(--spacing-4xl);
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            background: linear-gradient(135deg, rgba(10, 10, 10, 0.95) 0%, rgba(0, 0, 0, 0.98) 100%);
+            border-right: 1px solid var(--color-border);
+            overflow: hidden;
+        }
+
+        /* Background animated mesh for premium feel */
+        .brand-bg-mesh {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-image:
+                radial-gradient(at 0% 0%, rgba(74, 158, 255, 0.1) 0px, transparent 50%),
+                radial-gradient(at 100% 100%, rgba(30, 64, 175, 0.1) 0px, transparent 50%);
+            z-index: 0;
+            animation: pulse-mesh 8s ease-in-out infinite alternate;
+        }
+
+        @keyframes pulse-mesh {
+            0% {
+                opacity: 0.5;
+            }
+
+            100% {
+                opacity: 0.8;
+            }
+        }
+
+        .brand-content {
+            position: relative;
+            z-index: 2;
+            max-width: 500px;
+        }
+
+        .brand-badge {
+            display: inline-flex;
+            align-items: center;
+            gap: 0.5rem;
+            padding: 0.5rem 1rem;
+            background: rgba(74, 158, 255, 0.1);
+            border: 1px solid rgba(74, 158, 255, 0.2);
+            border-radius: 99px;
+            color: var(--color-blue-primary);
+            font-size: 0.875rem;
+            font-weight: 600;
+            margin-bottom: var(--spacing-xl);
+            letter-spacing: 0.05em;
+            text-transform: uppercase;
+        }
+
+        .display-heading {
+            font-family: 'Plus Jakarta Sans', sans-serif;
+            font-size: 3.5rem;
+            line-height: 1.1;
+            font-weight: 700;
+            background: linear-gradient(135deg, #FFFFFF 0%, #94A3B8 100%);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            margin-bottom: var(--spacing-lg);
+            letter-spacing: -0.02em;
+        }
+
+        .brand-desc {
+            font-size: 1.125rem;
+            color: var(--color-text-secondary);
+            line-height: 1.6;
+            margin-bottom: var(--spacing-2xl);
+            font-weight: 300;
+        }
+
+        .feature-grid {
+            display: grid;
+            gap: var(--spacing-lg);
+        }
+
+        .feature-item {
+            display: flex;
+            align-items: flex-start;
+            gap: 1rem;
+        }
+
+        .feature-icon {
+            width: 40px;
+            height: 40px;
+            background: rgba(255, 255, 255, 0.03);
+            border-radius: 10px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            border: 1px solid var(--color-border);
+            color: var(--color-blue-primary);
+        }
+
+        .feature-text h4 {
+            color: var(--color-text-primary);
+            font-size: 1rem;
+            margin-bottom: 0.25rem;
+        }
+
+        .feature-text p {
+            color: var(--color-text-muted);
+            font-size: 0.875rem;
+        }
+
+        /* Right Side: Form */
+        .form-panel {
+            position: relative;
+            padding: var(--spacing-2xl);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            overflow-y: auto;
+            /* Allow scrolling if height small */
+        }
+
+        .form-card {
+            width: 100%;
+            max-width: 520px;
+            background: rgba(20, 20, 20, 0.6);
+            backdrop-filter: blur(24px);
+            border: 1px solid var(--color-border);
+            border-radius: 24px;
+            padding: 3rem;
+            box-shadow: 0 25px 50px -12px rgba(0, 0, 0, 0.5);
+            animation: slideUp 0.6s cubic-bezier(0.16, 1, 0.3, 1);
+        }
+
+        @keyframes slideUp {
+            from {
+                opacity: 0;
+                transform: translateY(20px);
+            }
+
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        .form-header {
+            margin-bottom: 2.5rem;
+            text-align: center;
+        }
+
+        .form-inputs {
+            display: grid;
+            gap: 1.5rem;
+        }
+
+        .input-group {
+            position: relative;
+        }
+
+        .input-group label {
+            display: block;
+            font-size: 0.75rem;
+            font-weight: 600;
+            color: var(--color-text-muted);
+            text-transform: uppercase;
+            letter-spacing: 0.05em;
+            margin-bottom: 0.5rem;
+        }
+
+        .premium-input {
+            width: 100%;
+            background: rgba(0, 0, 0, 0.3);
+            border: 1px solid var(--color-border);
+            color: white;
+            padding: 1rem 1.25rem;
+            border-radius: 12px;
+            font-size: 1rem;
+            transition: all 0.2s ease;
+        }
+
+        .premium-input:focus {
+            outline: none;
+            border-color: var(--color-blue-primary);
+            background: rgba(0, 0, 0, 0.5);
+            box-shadow: 0 0 0 4px rgba(74, 158, 255, 0.1);
+        }
+
+        .premium-select {
+            appearance: none;
+            background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='24' height='24' viewBox='0 0 24 24' fill='none' stroke='%23888' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'%3E%3Cpolyline points='6 9 12 15 18 9'%3E%3C/polyline%3E%3C/svg%3E");
+            background-repeat: no-repeat;
+            background-position: right 1rem center;
+            background-size: 1em;
+        }
+
+        /* Compliance Checkbox */
+        .compliance-box {
+            background: rgba(74, 158, 255, 0.05);
+            border: 1px solid rgba(74, 158, 255, 0.2);
+            border-radius: 12px;
+            padding: 1rem;
+            display: flex;
+            align-items: center;
+            gap: 1rem;
+            cursor: pointer;
+            transition: 0.2s;
+        }
+
+        .compliance-box:hover {
+            background: rgba(74, 158, 255, 0.08);
+        }
+
+        .compliance-box input[type="checkbox"] {
+            width: 20px;
+            height: 20px;
+            accent-color: var(--color-blue-primary);
+        }
+
+        .submit-btn {
+            width: 100%;
+            padding: 1rem;
+            background: var(--gradient-primary);
+            border: none;
+            border-radius: 12px;
+            color: white;
+            font-weight: 600;
+            font-size: 1rem;
+            cursor: pointer;
+            margin-top: 1rem;
+            transition: all 0.2s;
+            box-shadow: 0 10px 15px -3px rgba(37, 99, 235, 0.3);
+        }
+
+        .submit-btn:hover {
+            box-shadow: 0 20px 25px -5px rgba(37, 99, 235, 0.4);
+            transform: translateY(-2px);
+        }
+
+        .login-link {
+            text-align: center;
+            margin-top: 2rem;
+            color: var(--color-text-muted);
+            font-size: 0.9rem;
+        }
+
+        .login-link a {
+            color: var(--color-blue-primary);
+            text-decoration: none;
+            font-weight: 500;
+        }
+
+        /* Success State */
+        .success-overlay {
+            position: absolute;
+            inset: 0;
+            background: rgba(10, 10, 10, 0.95);
+            backdrop-filter: blur(10px);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            flex-direction: column;
+            z-index: 10;
+            opacity: 0;
+            pointer-events: none;
+            transition: 0.3s;
+        }
+
+        .success-overlay.active {
+            opacity: 1;
+            pointer-events: all;
+        }
+
+        .success-icon {
+            width: 80px;
+            height: 80px;
+            background: var(--color-success);
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: white;
+            margin-bottom: 2rem;
+            box-shadow: 0 0 40px rgba(16, 185, 129, 0.4);
+        }
+
+        /* Mobile Responsive */
+        @media (max-width: 1024px) {
+            .split-layout {
+                grid-template-columns: 1fr;
+            }
+
+            .brand-panel {
+                display: none;
+            }
+
+            .form-panel {
+                padding: 1rem;
+            }
+
+            .form-card {
+                padding: 2rem;
+            }
+        }
+    </style>
+</head>
+
+<body>
+
+    <div class="split-layout">
+        <!-- Brand Panel (Left) -->
+        <div class="brand-panel">
+            <div class="brand-bg-mesh"></div>
+            <div class="brand-content">
+                <div class="brand-badge">Medora Institution Portal</div>
+                <h1 class="display-heading">Join the Future of Medical AI</h1>
+                <p class="brand-desc">
+                    Connect your institution to the world's most advanced secure federated learning network.
+                    Collaborate on diagnostics while keeping patient data strictly on-premise.
+                </p>
+
+                <div class="feature-grid">
+                    <div class="feature-item">
+                        <div class="feature-icon">
+                            <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" fill="none"
+                                viewBox="0 0 24 24" stroke="currentColor">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                                    d="M9 12l2 2 4-4m5.618-4.016A11.955 11.955 0 0112 2.944a11.955 11.955 0 01-8.618 3.04A12.02 12.02 0 003 9c0 5.591 3.824 10.29 9 11.622 5.176-1.332 9-6.03 9-11.622 0-1.042-.133-2.052-.382-3.016z" />
+                            </svg>
+                        </div>
+                        <div class="feature-text">
+                            <h4>Enterprise Grade Security</h4>
+                            <p>Military-grade differential privacy (ε=1.0) & local training.</p>
+                        </div>
+                    </div>
+                    <div class="feature-item">
+                        <div class="feature-icon">
+                            <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" fill="none"
+                                viewBox="0 0 24 24" stroke="currentColor">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                                    d="M19 11H5m14 0a2 2 0 012 2v6a2 2 0 01-2 2H5a2 2 0 01-2-2v-6a2 2 0 012-2m14 0V9a2 2 0 00-2-2M5 11V9a2 2 0 012-2m0 0V5a2 2 0 012-2h6a2 2 0 012 2v2M7 7h10" />
+                            </svg>
+                        </div>
+                        <div class="feature-text">
+                            <h4>Hugging Face Integration</h4>
+                            <p>Auto-sync validated global models to local nodes.</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Form Panel (Right) -->
+        <div class="form-panel">
+            <div class="form-card">
+                <div class="success-overlay" id="successOverlay">
+                    <div class="success-icon">
+                        <svg xmlns="http://www.w3.org/2000/svg" width="40" height="40" viewBox="0 0 24 24" fill="none"
+                            stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round">
+                            <polyline points="20 6 9 17 4 12"></polyline>
+                        </svg>
+                    </div>
+                    <h2 style="color:white; margin-bottom:1rem;">Registration Complete</h2>
+                    <p style="color:#aaa; text-align:center; margin-bottom:2rem;">Your node key has been generated.
+                        Redirecting to dashboard...</p>
+                </div>
+
+                <div class="form-header">
+                    <h2 style="font-size: 1.75rem; color: white; margin-bottom: 0.5rem;">Partner Registration</h2>
+                    <p style="color: var(--color-text-muted);">Configure your compute node details</p>
+                </div>
+
+                <form id="onboardingForm" onsubmit="handleRegister(event)">
+                    <div class="form-inputs">
+                        <div class="input-group">
+                            <label>Institution Name</label>
+                            <input type="text" name="hospital_name" class="premium-input"
+                                placeholder="e.g. Mayo Clinic Research" required>
+                        </div>
+
+                        <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 1rem;">
+                            <div class="input-group">
+                                <label>Node ID</label>
+                                <input type="text" name="hospital_id" class="premium-input" placeholder="MAYO-01"
+                                    required pattern="^[a-zA-Z0-9-]+$" title="Alphanumeric and dashes only">
+                            </div>
+                            <div class="input-group">
+                                <label>Data Region</label>
+                                <select name="region" class="premium-input premium-select">
+                                    <option value="US">🇺🇸 US (HIPAA)</option>
+                                    <option value="EU">🇪🇺 EU (GDPR)</option>
+                                    <option value="ASIA">🌏 Asia-Pac</option>
+                                </select>
+                            </div>
+                        </div>
+
+                        <div class="input-group">
+                            <label>Compute Capabilities</label>
+                            <select name="compute_capability" class="premium-input premium-select">
+                                <option value="GPU_A100">NVIDIA A100 (Enterprise Training)</option>
+                                <option value="GPU_V100">NVIDIA V100 (High Performance)</option>
+                                <option value="GPU_T4">NVIDIA T4 (Inference Optimized)</option>
+                                <option value="CPU">CPU Only (Federated Evaluation)</option>
+                            </select>
+                        </div>
+
+                        <div class="input-group">
+                            <label>Admin Access</label>
+                            <input type="email" name="admin_email" class="premium-input"
+                                placeholder="admin@hospital.org" required style="margin-bottom: 0.5rem;">
+                            <input type="password" name="password" class="premium-input"
+                                placeholder="Create robust password" required minlength="8">
+                        </div>
+
+                        <label class="compliance-box">
+                            <input type="checkbox" name="compliance_accepted" required>
+                            <div>
+                                <span style="display:block; color:white; font-weight:600; font-size:0.9rem;">Regulatory
+                                    Compliance</span>
+                                <span style="display:block; color:#888; font-size:0.8rem;">I verify we adhere to local
+                                    data sovereignty laws.</span>
+                            </div>
+                        </label>
+                    </div>
+
+                    <button type="submit" class="submit-btn" id="submitBtn">Initialize Node Partnership</button>
+                    <div id="statusMessage"
+                        style="color:#ef4444; margin-top:1rem; text-align:center; font-size:0.9rem;"></div>
+                </form>
+
+                <div class="login-link">
+                    Already a partner? <a href="/login.html">Sign in to Console</a>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        async function handleRegister(e) {
+            e.preventDefault();
+            const btn = document.getElementById('submitBtn');
+            const status = document.getElementById('statusMessage');
+
+            btn.innerHTML = '<span class="loader"></span> JSON Handshake...';
+            btn.style.opacity = '0.8';
+
+            const formData = new FormData(e.target);
+
+            try {
+                const response = await fetch('/api/v1/register_hospital', {
+                    method: 'POST',
+                    body: formData
+                });
+
+                const data = await response.json();
+
+                if (!response.ok) throw new Error(data.detail);
+
+                // Success Animation
+                document.getElementById('successOverlay').classList.add('active');
+                setTimeout(() => window.location.href = '/login.html', 2500);
+
+            } catch (err) {
+                status.textContent = err.message;
+                btn.textContent = 'Initialize Node Partnership';
+                btn.style.opacity = '1';
+            }
+        }
+    </script>
+</body>
+
+</html>

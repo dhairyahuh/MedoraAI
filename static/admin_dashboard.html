@@ -1,0 +1,975 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Medical AI - Admin Dashboard</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, sans-serif;
+            background: #f5f7fa;
+            color: #2d3748;
+        }
+
+        .container {
+            display: flex;
+            min-height: 100vh;
+        }
+
+        /* Sidebar */
+        .sidebar {
+            width: 260px;
+            background: #1a202c;
+            color: white;
+            padding: 2rem 0;
+            position: fixed;
+            height: 100vh;
+            overflow-y: auto;
+        }
+
+        .logo {
+            padding: 0 2rem 2rem;
+            font-size: 1.5rem;
+            font-weight: bold;
+            border-bottom: 1px solid rgba(255,255,255,0.1);
+        }
+
+        .nav-menu {
+            list-style: none;
+            padding: 1rem 0;
+        }
+
+        .nav-item {
+            padding: 0.75rem 2rem;
+            cursor: pointer;
+            transition: background 0.2s;
+        }
+
+        .nav-item:hover, .nav-item.active {
+            background: rgba(255,255,255,0.1);
+        }
+
+        .nav-item i {
+            margin-right: 0.75rem;
+        }
+
+        /* Main Content */
+        .main-content {
+            flex: 1;
+            margin-left: 260px;
+            padding: 2rem;
+        }
+
+        .header {
+            background: white;
+            padding: 1.5rem 2rem;
+            border-radius: 8px;
+            margin-bottom: 2rem;
+            box-shadow: 0 1px 3px rgba(0,0,0,0.1);
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .header h1 {
+            font-size: 1.75rem;
+            font-weight: 600;
+        }
+
+        .user-info {
+            display: flex;
+            align-items: center;
+            gap: 1rem;
+        }
+
+        .avatar {
+            width: 40px;
+            height: 40px;
+            border-radius: 50%;
+            background: #4299e1;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-weight: bold;
+        }
+
+        /* Stats Cards */
+        .stats-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
+            gap: 1.5rem;
+            margin-bottom: 2rem;
+        }
+
+        .stat-card {
+            background: white;
+            padding: 1.5rem;
+            border-radius: 8px;
+            box-shadow: 0 1px 3px rgba(0,0,0,0.1);
+        }
+
+        .stat-label {
+            color: #718096;
+            font-size: 0.875rem;
+            margin-bottom: 0.5rem;
+        }
+
+        .stat-value {
+            font-size: 2rem;
+            font-weight: bold;
+            margin-bottom: 0.5rem;
+        }
+
+        .stat-trend {
+            font-size: 0.875rem;
+            color: #48bb78;
+        }
+
+        .stat-trend.negative {
+            color: #f56565;
+        }
+
+        /* Content Sections */
+        .section {
+            display: none;
+            animation: fadeIn 0.3s;
+        }
+
+        .section.active {
+            display: block;
+        }
+
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(10px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        .card {
+            background: white;
+            padding: 2rem;
+            border-radius: 8px;
+            box-shadow: 0 1px 3px rgba(0,0,0,0.1);
+            margin-bottom: 1.5rem;
+        }
+
+        .card-header {
+            font-size: 1.25rem;
+            font-weight: 600;
+            margin-bottom: 1.5rem;
+            padding-bottom: 1rem;
+            border-bottom: 1px solid #e2e8f0;
+        }
+
+        /* Tables */
+        table {
+            width: 100%;
+            border-collapse: collapse;
+        }
+
+        th {
+            text-align: left;
+            padding: 0.75rem;
+            background: #f7fafc;
+            font-weight: 600;
+            border-bottom: 2px solid #e2e8f0;
+        }
+
+        td {
+            padding: 0.75rem;
+            border-bottom: 1px solid #e2e8f0;
+        }
+
+        tr:hover {
+            background: #f7fafc;
+        }
+
+        /* Buttons */
+        .btn {
+            padding: 0.5rem 1rem;
+            border: none;
+            border-radius: 4px;
+            cursor: pointer;
+            font-size: 0.875rem;
+            font-weight: 500;
+            transition: all 0.2s;
+        }
+
+        .btn-primary {
+            background: #4299e1;
+            color: white;
+        }
+
+        .btn-primary:hover {
+            background: #3182ce;
+        }
+
+        .btn-success {
+            background: #48bb78;
+            color: white;
+        }
+
+        .btn-danger {
+            background: #f56565;
+            color: white;
+        }
+
+        .btn-secondary {
+            background: #e2e8f0;
+            color: #2d3748;
+        }
+
+        /* Badges */
+        .badge {
+            display: inline-block;
+            padding: 0.25rem 0.75rem;
+            border-radius: 12px;
+            font-size: 0.75rem;
+            font-weight: 600;
+        }
+
+        .badge-success {
+            background: #c6f6d5;
+            color: #22543d;
+        }
+
+        .badge-warning {
+            background: #feebc8;
+            color: #744210;
+        }
+
+        .badge-error {
+            background: #fed7d7;
+            color: #742a2a;
+        }
+
+        .badge-info {
+            background: #bee3f8;
+            color: #2c5282;
+        }
+
+        /* Forms */
+        .form-group {
+            margin-bottom: 1.5rem;
+        }
+
+        .form-label {
+            display: block;
+            margin-bottom: 0.5rem;
+            font-weight: 500;
+        }
+
+        .form-input {
+            width: 100%;
+            padding: 0.75rem;
+            border: 1px solid #e2e8f0;
+            border-radius: 4px;
+            font-size: 1rem;
+        }
+
+        .form-input:focus {
+            outline: none;
+            border-color: #4299e1;
+        }
+
+        select.form-input {
+            cursor: pointer;
+        }
+
+        /* Charts Placeholder */
+        .chart-container {
+            height: 300px;
+            background: #f7fafc;
+            border-radius: 8px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: #718096;
+        }
+
+        /* Logs */
+        .log-entry {
+            padding: 0.5rem;
+            font-family: 'Courier New', monospace;
+            font-size: 0.875rem;
+            border-bottom: 1px solid #e2e8f0;
+        }
+
+        .log-entry.error {
+            color: #f56565;
+        }
+
+        .log-entry.warning {
+            color: #ed8936;
+        }
+
+        .log-container {
+            max-height: 400px;
+            overflow-y: auto;
+            background: #1a202c;
+            color: #a0aec0;
+            padding: 1rem;
+            border-radius: 4px;
+        }
+
+        /* Loading Spinner */
+        .spinner {
+            border: 3px solid #f3f3f3;
+            border-top: 3px solid #4299e1;
+            border-radius: 50%;
+            width: 40px;
+            height: 40px;
+            animation: spin 1s linear infinite;
+            margin: 2rem auto;
+        }
+
+        @keyframes spin {
+            0% { transform: rotate(0deg); }
+            100% { transform: rotate(360deg); }
+        }
+
+        /* Responsive */
+        @media (max-width: 768px) {
+            .sidebar {
+                transform: translateX(-100%);
+            }
+
+            .main-content {
+                margin-left: 0;
+            }
+
+            .stats-grid {
+                grid-template-columns: 1fr;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <!-- Sidebar -->
+        <aside class="sidebar">
+            <div class="logo">🏥 Medical AI</div>
+            <ul class="nav-menu">
+                <li class="nav-item active" onclick="showSection('overview')">
+                    📊 Overview
+                </li>
+                <li class="nav-item" onclick="showSection('models')">
+                    🤖 Models
+                </li>
+                <li class="nav-item" onclick="showSection('users')">
+                    👥 Users
+                </li>
+                <li class="nav-item" onclick="showSection('monitoring')">
+                    📈 Monitoring
+                </li>
+                <li class="nav-item" onclick="showSection('backups')">
+                    💾 Backups
+                </li>
+                <li class="nav-item" onclick="showSection('logs')">
+                    📋 Logs
+                </li>
+                <li class="nav-item" onclick="showSection('settings')">
+                    ⚙️ Settings
+                </li>
+            </ul>
+        </aside>
+
+        <!-- Main Content -->
+        <main class="main-content">
+            <div class="header">
+                <h1 id="section-title">System Overview</h1>
+                <div class="user-info">
+                    <span id="user-name">Admin User</span>
+                    <div class="avatar">A</div>
+                </div>
+            </div>
+
+            <!-- Overview Section -->
+            <div id="overview" class="section active">
+                <div class="stats-grid">
+                    <div class="stat-card">
+                        <div class="stat-label">Total Inferences</div>
+                        <div class="stat-value" id="stat-inferences">24,567</div>
+                        <div class="stat-trend">↗ +12% from last week</div>
+                    </div>
+                    <div class="stat-card">
+                        <div class="stat-label">Active Users</div>
+                        <div class="stat-value" id="stat-users">47</div>
+                        <div class="stat-trend">↗ +3 new this week</div>
+                    </div>
+                    <div class="stat-card">
+                        <div class="stat-label">Model Accuracy</div>
+                        <div class="stat-value" id="stat-accuracy">87.3%</div>
+                        <div class="stat-trend">↗ +2.1% this month</div>
+                    </div>
+                    <div class="stat-card">
+                        <div class="stat-label">System Health</div>
+                        <div class="stat-value">
+                            <span class="badge badge-success">Healthy</span>
+                        </div>
+                        <div class="stat-trend">All systems operational</div>
+                    </div>
+                </div>
+
+                <div class="card">
+                    <div class="card-header">Recent Activity</div>
+                    <table>
+                        <thead>
+                            <tr>
+                                <th>Time</th>
+                                <th>Event</th>
+                                <th>User</th>
+                                <th>Status</th>
+                            </tr>
+                        </thead>
+                        <tbody id="recent-activity">
+                            <tr>
+                                <td>2 minutes ago</td>
+                                <td>Inference: pneumonia_detector</td>
+                                <td>dr.smith</td>
+                                <td><span class="badge badge-success">Success</span></td>
+                            </tr>
+                            <tr>
+                                <td>15 minutes ago</td>
+                                <td>User login</td>
+                                <td>dr.jones</td>
+                                <td><span class="badge badge-success">Success</span></td>
+                            </tr>
+                            <tr>
+                                <td>1 hour ago</td>
+                                <td>Backup completed</td>
+                                <td>system</td>
+                                <td><span class="badge badge-success">Success</span></td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+
+                <div class="card">
+                    <div class="card-header">Inference Performance</div>
+                    <div class="chart-container">
+                        📊 Chart: Inferences per day (last 7 days)
+                    </div>
+                </div>
+            </div>
+
+            <!-- Models Section -->
+            <div id="models" class="section">
+                <div class="card">
+                    <div class="card-header">
+                        Active Models
+                        <button class="btn btn-primary" style="float: right;" onclick="showUploadModel()">Upload New Model</button>
+                    </div>
+                    <table>
+                        <thead>
+                            <tr>
+                                <th>Model Name</th>
+                                <th>Version</th>
+                                <th>Accuracy</th>
+                                <th>Inferences</th>
+                                <th>Status</th>
+                                <th>Actions</th>
+                            </tr>
+                        </thead>
+                        <tbody id="models-table">
+                            <tr>
+                                <td>pneumonia_detector</td>
+                                <td>2.1</td>
+                                <td>87.3%</td>
+                                <td>15,423</td>
+                                <td><span class="badge badge-success">Active</span></td>
+                                <td>
+                                    <button class="btn btn-secondary">Details</button>
+                                    <button class="btn btn-danger">Deactivate</button>
+                                </td>
+                            </tr>
+                            <tr>
+                                <td>skin_cancer_classifier</td>
+                                <td>1.3</td>
+                                <td>91.2%</td>
+                                <td>8,734</td>
+                                <td><span class="badge badge-success">Active</span></td>
+                                <td>
+                                    <button class="btn btn-secondary">Details</button>
+                                    <button class="btn btn-danger">Deactivate</button>
+                                </td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+
+                <div class="card">
+                    <div class="card-header">Model Validation History</div>
+                    <table>
+                        <thead>
+                            <tr>
+                                <th>Model</th>
+                                <th>Version</th>
+                                <th>Date</th>
+                                <th>Result</th>
+                                <th>Report</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr>
+                                <td>pneumonia_detector</td>
+                                <td>2.1</td>
+                                <td>2025-11-20 10:00</td>
+                                <td><span class="badge badge-success">Passed</span></td>
+                                <td><button class="btn btn-secondary">View</button></td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+
+            <!-- Users Section -->
+            <div id="users" class="section">
+                <div class="card">
+                    <div class="card-header">
+                        User Management
+                        <button class="btn btn-primary" style="float: right;" onclick="showCreateUser()">Create User</button>
+                    </div>
+                    <table>
+                        <thead>
+                            <tr>
+                                <th>Username</th>
+                                <th>Email</th>
+                                <th>Role</th>
+                                <th>Hospital</th>
+                                <th>Last Login</th>
+                                <th>Status</th>
+                                <th>Actions</th>
+                            </tr>
+                        </thead>
+                        <tbody id="users-table">
+                            <tr>
+                                <td>dr.smith</td>
+                                <td>smith@hospital.com</td>
+                                <td>Radiologist</td>
+                                <td>Hospital 001</td>
+                                <td>2 hours ago</td>
+                                <td><span class="badge badge-success">Active</span></td>
+                                <td>
+                                    <button class="btn btn-secondary">Edit</button>
+                                    <button class="btn btn-danger">Deactivate</button>
+                                </td>
+                            </tr>
+                            <tr>
+                                <td>dr.jones</td>
+                                <td>jones@hospital.com</td>
+                                <td>Radiologist</td>
+                                <td>Hospital 002</td>
+                                <td>1 day ago</td>
+                                <td><span class="badge badge-success">Active</span></td>
+                                <td>
+                                    <button class="btn btn-secondary">Edit</button>
+                                    <button class="btn btn-danger">Deactivate</button>
+                                </td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+
+            <!-- Monitoring Section -->
+            <div id="monitoring" class="section">
+                <div class="stats-grid">
+                    <div class="stat-card">
+                        <div class="stat-label">CPU Usage</div>
+                        <div class="stat-value" id="cpu-usage">--</div>
+                        <div class="metric-bar" data-type="cpu" style="margin-top: 10px;">
+                            <div class="metric-fill" style="width: 0%; height: 8px; background: #48bb78; border-radius: 4px; transition: width 0.3s;"></div>
+                        </div>
+                    </div>
+                    <div class="stat-card">
+                        <div class="stat-label">Memory Usage</div>
+                        <div class="stat-value" id="memory-usage">--</div>
+                        <div class="metric-bar" data-type="memory" style="margin-top: 10px;">
+                            <div class="metric-fill" style="width: 0%; height: 8px; background: #48bb78; border-radius: 4px; transition: width 0.3s;"></div>
+                        </div>
+                    </div>
+                    <div class="stat-card">
+                        <div class="stat-label">Disk Usage</div>
+                        <div class="stat-value" id="disk-usage">--</div>
+                        <div class="metric-bar" data-type="disk" style="margin-top: 10px;">
+                            <div class="metric-fill" style="width: 0%; height: 8px; background: #48bb78; border-radius: 4px; transition: width 0.3s;"></div>
+                        </div>
+                    </div>
+                    <div class="stat-card">
+                        <div class="stat-label">Queue Status</div>
+                        <div class="stat-value" id="queue-status">Active</div>
+                        <div class="stat-trend" id="queue-trend">Processing requests</div>
+                    </div>
+                </div>
+
+                <div class="card">
+                    <div class="card-header">System Performance</div>
+                    <div class="chart-container">
+                        <p style="color: #64748b; text-align: center; padding: 2rem;">
+                            📊 Real-time monitoring active. Metrics update every 30 seconds.
+                        </p>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Backups Section -->
+            <div id="backups" class="section">
+                <div class="card">
+                    <div class="card-header">
+                        Backup Management
+                        <button class="btn btn-primary" style="float: right;" onclick="createBackup()">Create Backup Now</button>
+                    </div>
+                    <table>
+                        <thead>
+                            <tr>
+                                <th>Filename</th>
+                                <th>Type</th>
+                                <th>Size</th>
+                                <th>Created</th>
+                                <th>Actions</th>
+                            </tr>
+                        </thead>
+                        <tbody id="backups-table">
+                            <tr>
+                                <td>backup_full_20251123_030000.tar.gz</td>
+                                <td>Full</td>
+                                <td>2.3 GB</td>
+                                <td>Today 3:00 AM</td>
+                                <td>
+                                    <button class="btn btn-success">Restore</button>
+                                    <button class="btn btn-secondary">Download</button>
+                                    <button class="btn btn-danger">Delete</button>
+                                </td>
+                            </tr>
+                            <tr>
+                                <td>backup_full_20251122_030000.tar.gz</td>
+                                <td>Full</td>
+                                <td>2.2 GB</td>
+                                <td>Yesterday 3:00 AM</td>
+                                <td>
+                                    <button class="btn btn-success">Restore</button>
+                                    <button class="btn btn-secondary">Download</button>
+                                    <button class="btn btn-danger">Delete</button>
+                                </td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+
+                <div class="card">
+                    <div class="card-header">Backup Configuration</div>
+                    <div class="form-group">
+                        <label class="form-label">Backup Schedule</label>
+                        <select class="form-input">
+                            <option>Daily at 3:00 AM</option>
+                            <option>Every 6 hours</option>
+                            <option>Weekly on Sunday</option>
+                        </select>
+                    </div>
+                    <div class="form-group">
+                        <label class="form-label">Retention Period (days)</label>
+                        <input type="number" class="form-input" value="30">
+                    </div>
+                    <button class="btn btn-primary">Save Configuration</button>
+                </div>
+            </div>
+
+            <!-- Logs Section -->
+            <div id="logs" class="section">
+                <div class="card">
+                    <div class="card-header">
+                        System Logs
+                        <button class="btn btn-secondary" style="float: right;" onclick="refreshLogs()">Refresh</button>
+                    </div>
+                    <div class="form-group">
+                        <label class="form-label">Log Level</label>
+                        <select class="form-input" style="width: 200px;">
+                            <option>All</option>
+                            <option>ERROR</option>
+                            <option>WARNING</option>
+                            <option>INFO</option>
+                            <option>DEBUG</option>
+                        </select>
+                    </div>
+                    <div class="log-container" id="log-output">
+                        <div class="log-entry">[2025-11-23 14:35:12] INFO: Server started on http://0.0.0.0:8000</div>
+                        <div class="log-entry">[2025-11-23 14:35:15] INFO: Backup system initialized</div>
+                        <div class="log-entry warning">[2025-11-23 14:40:22] WARNING: Disk space below 20%</div>
+                        <div class="log-entry">[2025-11-23 14:42:15] INFO: Inference completed: pneumonia_detector</div>
+                        <div class="log-entry">[2025-11-23 14:45:30] INFO: User login: dr.smith</div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Settings Section -->
+            <div id="settings" class="section">
+                <div class="card">
+                    <div class="card-header">System Configuration</div>
+                    <div class="form-group">
+                        <label class="form-label">Server Host</label>
+                        <input type="text" class="form-input" value="0.0.0.0">
+                    </div>
+                    <div class="form-group">
+                        <label class="form-label">Server Port</label>
+                        <input type="number" class="form-input" value="8000">
+                    </div>
+                    <div class="form-group">
+                        <label class="form-label">Number of Workers</label>
+                        <input type="number" class="form-input" value="8">
+                    </div>
+                    <div class="form-group">
+                        <label class="form-label">Device</label>
+                        <select class="form-input">
+                            <option>CUDA (GPU)</option>
+                            <option>CPU</option>
+                        </select>
+                    </div>
+                    <button class="btn btn-primary">Save Settings</button>
+                    <button class="btn btn-danger" style="float: right;">Restart Server</button>
+                </div>
+
+                <div class="card">
+                    <div class="card-header">Email Alerts Configuration</div>
+                    <div class="form-group">
+                        <label class="form-label">SMTP Server</label>
+                        <input type="text" class="form-input" placeholder="smtp.gmail.com">
+                    </div>
+                    <div class="form-group">
+                        <label class="form-label">SMTP Port</label>
+                        <input type="number" class="form-input" value="587">
+                    </div>
+                    <div class="form-group">
+                        <label class="form-label">Alert Email</label>
+                        <input type="email" class="form-input" placeholder="admin@hospital.com">
+                    </div>
+                    <button class="btn btn-primary">Save Configuration</button>
+                    <button class="btn btn-secondary">Send Test Email</button>
+                </div>
+            </div>
+        </main>
+    </div>
+
+    <script>
+        // Navigation
+        function showSection(sectionId) {
+            // Hide all sections
+            document.querySelectorAll('.section').forEach(section => {
+                section.classList.remove('active');
+            });
+
+            // Remove active from all nav items
+            document.querySelectorAll('.nav-item').forEach(item => {
+                item.classList.remove('active');
+            });
+
+            // Show selected section
+            document.getElementById(sectionId).classList.add('active');
+
+            // Update active nav item
+            event.target.classList.add('active');
+
+            // Update title
+            const titles = {
+                'overview': 'System Overview',
+                'models': 'Model Management',
+                'users': 'User Management',
+                'monitoring': 'System Monitoring',
+                'backups': 'Backup Management',
+                'logs': 'System Logs',
+                'settings': 'System Settings'
+            };
+            document.getElementById('section-title').textContent = titles[sectionId];
+        }
+
+        // API Configuration
+        const API_BASE = window.location.origin;
+        let updateInterval;
+
+        // Fetch and update statistics
+        async function fetchStats() {
+            try {
+                const response = await fetch(`${API_BASE}/api/v1/admin/stats`);
+                const data = await response.json();
+                
+                // Update stat cards
+                document.getElementById('stat-inferences').textContent = data.total_inferences.toLocaleString();
+                document.getElementById('stat-users').textContent = data.active_users;
+                document.getElementById('stat-accuracy').textContent = data.avg_accuracy + '%';
+                
+                // Update monitoring section
+                if (data.cpu_usage !== undefined) {
+                    document.getElementById('cpu-usage').textContent = data.cpu_usage + '%';
+                    updateMetricBar('cpu', data.cpu_usage);
+                }
+                if (data.memory_usage !== undefined) {
+                    document.getElementById('memory-usage').textContent = data.memory_usage + '%';
+                    updateMetricBar('memory', data.memory_usage);
+                }
+                if (data.disk_usage !== undefined) {
+                    document.getElementById('disk-usage').textContent = data.disk_usage + '%';
+                    updateMetricBar('disk', data.disk_usage);
+                }
+                
+            } catch (error) {
+                console.error('Error fetching stats:', error);
+            }
+        }
+
+        // Update metric progress bars
+        function updateMetricBar(type, value) {
+            const bar = document.querySelector(`.metric-bar[data-type="${type}"]`);
+            if (bar) {
+                const fill = bar.querySelector('.metric-fill');
+                if (fill) {
+                    fill.style.width = value + '%';
+                    // Color code based on usage
+                    if (value > 90) {
+                        fill.style.background = '#f56565';
+                    } else if (value > 70) {
+                        fill.style.background = '#f59e0b';
+                    } else {
+                        fill.style.background = '#48bb78';
+                    }
+                }
+            }
+        }
+
+        // Load recent activity
+        async function loadActivity() {
+            try {
+                const response = await fetch(`${API_BASE}/api/v1/admin/activity`);
+                const data = await response.json();
+                
+                const tbody = document.getElementById('recent-activity');
+                if (data.activities && data.activities.length > 0) {
+                    tbody.innerHTML = data.activities.map(activity => `
+                        <tr>
+                            <td>${activity.user}</td>
+                            <td>${activity.action}</td>
+                            <td>${new Date(activity.time).toLocaleString()}</td>
+                            <td><span class="badge badge-${activity.status === 'success' ? 'success' : 'error'}">${activity.status}</span></td>
+                        </tr>
+                    `).join('');
+                }
+            } catch (error) {
+                console.error('Error loading activity:', error);
+            }
+        }
+
+        // Load models
+        async function loadModels() {
+            try {
+                const response = await fetch(`${API_BASE}/api/v1/admin/models`);
+                const data = await response.json();
+                
+                const tbody = document.getElementById('models-table');
+                if (data.models && data.models.length > 0) {
+                    tbody.innerHTML = data.models.map(model => `
+                        <tr>
+                            <td>${model.name}</td>
+                            <td>${model.type}</td>
+                            <td>${model.version}</td>
+                            <td><span class="badge badge-${model.status === 'active' ? 'success' : 'warning'}">${model.status}</span></td>
+                            <td>${model.requests.toLocaleString()}</td>
+                            <td>${model.accuracy}%</td>
+                            <td>
+                                <button class="btn btn-secondary btn-sm">Configure</button>
+                            </td>
+                        </tr>
+                    `).join('');
+                }
+            } catch (error) {
+                console.error('Error loading models:', error);
+            }
+        }
+
+        // Create backup
+        async function createBackup() {
+            if (confirm('Create a new backup? This may take several minutes.')) {
+                try {
+                    const response = await fetch(`${API_BASE}/api/v1/admin/backup`, { 
+                        method: 'POST',
+                        headers: {
+                            'Content-Type': 'application/json'
+                        }
+                    });
+                    const data = await response.json();
+                    
+                    if (data.success) {
+                        alert(`Backup created successfully: ${data.filename}`);
+                        loadBackups(); // Refresh backup list
+                    } else {
+                        alert(`Backup failed: ${data.message}`);
+                    }
+                } catch (error) {
+                    console.error('Error creating backup:', error);
+                    alert('Failed to create backup. Check console for details.');
+                }
+            }
+        }
+
+        // Load backups list
+        async function loadBackups() {
+            // This would fetch backup list from backend
+            // For now, just update the timestamp
+            const tbody = document.getElementById('backups-table');
+            const now = new Date().toLocaleString();
+            // Keep existing content, just acknowledge refresh
+        }
+
+        // Refresh logs
+        async function refreshLogs() {
+            try {
+                const response = await fetch(`${API_BASE}/api/v1/admin/logs`);
+                const data = await response.json();
+                
+                const logOutput = document.getElementById('log-output');
+                if (data.logs) {
+                    logOutput.textContent = data.logs;
+                    logOutput.scrollTop = logOutput.scrollHeight; // Scroll to bottom
+                }
+            } catch (error) {
+                console.error('Error loading logs:', error);
+                alert('Failed to load logs. Check console for details.');
+            }
+        }
+
+        function showUploadModel() {
+            alert('Model upload feature - In production, this would open a file upload dialog');
+        }
+
+        function showCreateUser() {
+            alert('User creation feature - In production, this would open a user creation form');
+        }
+
+        // Initialize dashboard
+        function initDashboard() {
+            fetchStats();
+            loadActivity();
+            loadModels();
+            
+            // Auto-refresh stats every 30 seconds
+            updateInterval = setInterval(() => {
+                fetchStats();
+                loadActivity();
+            }, 30000);
+        }
+
+        // Cleanup on page unload
+        window.addEventListener('beforeunload', () => {
+            if (updateInterval) {
+                clearInterval(updateInterval);
+            }
+        });
+
+        // Initial load
+        initDashboard();
+    </script>
+</body>
+</html>

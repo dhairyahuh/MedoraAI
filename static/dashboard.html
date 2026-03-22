@@ -1,0 +1,318 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Dashboard - Medical AI Platform</title>
+    <link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>🏥</text></svg>">
+    <link rel="stylesheet" href="/static/css/styles.css?v=3.0">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700;800&family=Inter:wght@300;400;500;600&display=swap" rel="stylesheet">
+    <style>
+        .dashboard-header {
+            background: var(--color-surface);
+            border-bottom: 1px solid var(--color-border);
+            padding: var(--spacing-lg) var(--spacing-xl);
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+        
+        .dashboard-title {
+            font-size: 1.5rem;
+            font-weight: 700;
+        }
+        
+        .dashboard-user {
+            display: flex;
+            align-items: center;
+            gap: var(--spacing-md);
+        }
+        
+        .user-info {
+            text-align: right;
+        }
+        
+        .user-name {
+            font-size: 0.9375rem;
+            font-weight: 600;
+            color: var(--color-text-primary);
+        }
+        
+        .user-role {
+            font-size: 0.8125rem;
+            color: var(--color-text-muted);
+        }
+        
+        .btn-logout {
+            padding: var(--spacing-sm) var(--spacing-lg);
+            background: transparent;
+            border: 1px solid var(--color-border);
+            color: var(--color-text-primary);
+            border-radius: var(--radius-full);
+            cursor: pointer;
+            transition: all var(--transition-fast);
+        }
+        
+        .btn-logout:hover {
+            border-color: var(--color-error);
+            color: var(--color-error);
+        }
+        
+        .dashboard-content {
+            padding: var(--spacing-3xl) var(--spacing-xl);
+            max-width: 1400px;
+            margin: 0 auto;
+        }
+        
+        .stats-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+            gap: var(--spacing-lg);
+            margin-bottom: var(--spacing-3xl);
+        }
+        
+        .stat-card {
+            background: var(--glass-bg);
+            backdrop-filter: blur(20px);
+            border: 1px solid var(--glass-border);
+            border-radius: var(--radius-lg);
+            padding: var(--spacing-xl);
+        }
+        
+        .stat-label {
+            font-size: 0.875rem;
+            color: var(--color-text-muted);
+            text-transform: uppercase;
+            letter-spacing: 0.05em;
+            margin-bottom: var(--spacing-sm);
+        }
+        
+        .stat-value {
+            font-size: 2.5rem;
+            font-weight: 700;
+            background: var(--gradient-primary);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+        }
+    </style>
+</head>
+<body style="background: var(--color-pure-black);">
+    <div class="dashboard-header">
+        <h1 class="dashboard-title">🏥 Hospital Dashboard</h1>
+        <div class="dashboard-user">
+            <div class="user-info">
+                <div class="user-name" id="hospitalName">Loading...</div>
+                <div class="user-role" id="hospitalId">---</div>
+            </div>
+            <button class="btn-logout" id="logoutBtn">Sign Out</button>
+        </div>
+    </div>
+    
+    <div class="dashboard-content">
+        <div class="stats-grid">
+            <div class="stat-card">
+                <div class="stat-label">Total Analyses</div>
+                <div class="stat-value" id="totalAnalyses">0</div>
+                <div class="stat-sublabel" style="margin-top: 8px; font-size: 0.75rem; color: var(--color-text-muted);">
+                    <span id="completedAnalyses">0</span> completed, <span id="failedAnalyses">0</span> failed
+                </div>
+            </div>
+            
+            <div class="stat-card">
+                <div class="stat-label">Queue Status</div>
+                <div class="stat-value" id="queueLength">0</div>
+                <div class="stat-sublabel" style="margin-top: 8px; font-size: 0.75rem; color: var(--color-text-muted);">
+                    <span id="queueUsage">0%</span> capacity used
+                </div>
+            </div>
+            
+            <div class="stat-card">
+                <div class="stat-label">Average Confidence</div>
+                <div class="stat-value" id="avgConfidence">--</div>
+                <div class="stat-sublabel" style="margin-top: 8px; font-size: 0.75rem; color: var(--color-text-muted);">
+                    Success rate: <span id="successRate">--</span>%
+                </div>
+            </div>
+            
+            <div class="stat-card">
+                <div class="stat-label">System Status</div>
+                <div class="stat-value" id="systemStatus" style="color: var(--color-success);">● Online</div>
+                <div class="stat-sublabel" style="margin-top: 8px; font-size: 0.75rem; color: var(--color-text-muted);">
+                    <span id="modelsActive">15</span> models active
+                </div>
+            </div>
+        </div>
+        
+        <div style="text-align: center; margin-top: var(--spacing-3xl); color: var(--color-text-muted); font-size: 0.875rem;">
+            <span id="lastUpdate">Last updated: --</span> • 
+            <span style="color: var(--color-success);">● Live</span>
+        </div>
+        
+        <div style="text-align: center; margin-top: var(--spacing-2xl);">
+            <a href="/" class="btn-hero-primary">Go to Analysis Platform</a>
+        </div>
+    </div>
+    
+    <script>
+        const API_BASE = window.location.origin;
+        const accessToken = localStorage.getItem('access_token');
+        const hospitalId = localStorage.getItem('hospital_id');
+        let updateInterval;
+        
+        // Check authentication
+        if (!accessToken || !hospitalId) {
+            // Allow access without auth for demo purposes
+            console.warn('No authentication found, using guest mode');
+        }
+        
+        // Load real-time dashboard stats
+        async function loadDashboardStats() {
+            try {
+                const response = await fetch(`${API_BASE}/api/v1/dashboard/stats`);
+                
+                if (!response.ok) {
+                    throw new Error('Failed to load stats');
+                }
+                
+                const data = await response.json();
+                
+                // Update all stats with animation
+                updateStatWithAnimation('totalAnalyses', data.total_analyses || 0);
+                updateStatWithAnimation('completedAnalyses', data.completed_analyses || 0);
+                updateStatWithAnimation('failedAnalyses', data.failed_analyses || 0);
+                updateStatWithAnimation('queueLength', data.queue_length || 0);
+                
+                document.getElementById('queueUsage').textContent = (data.queue_usage_percent || 0) + '%';
+                document.getElementById('avgConfidence').textContent = (data.avg_confidence || 0) + '%';
+                document.getElementById('successRate').textContent = data.success_rate || 0;
+                document.getElementById('modelsActive').textContent = data.models_active || 15;
+                
+                // Update system status with color
+                const statusElement = document.getElementById('systemStatus');
+                const status = data.system_status || 'online';
+                
+                if (status === 'online') {
+                    statusElement.style.color = 'var(--color-success)';
+                    statusElement.textContent = '● Online';
+                } else if (status === 'busy') {
+                    statusElement.style.color = '#f59e0b';
+                    statusElement.textContent = '● Busy';
+                } else if (status === 'critical') {
+                    statusElement.style.color = 'var(--color-error)';
+                    statusElement.textContent = '● Critical';
+                }
+                
+                // Update timestamp
+                const now = new Date();
+                document.getElementById('lastUpdate').textContent = 
+                    `Last updated: ${now.toLocaleTimeString()}`;
+                
+            } catch (error) {
+                console.error('Error loading dashboard stats:', error);
+                // Show error state
+                document.getElementById('systemStatus').style.color = 'var(--color-error)';
+                document.getElementById('systemStatus').textContent = '● Offline';
+            }
+        }
+        
+        // Animate stat value changes
+        function updateStatWithAnimation(elementId, newValue) {
+            const element = document.getElementById(elementId);
+            const oldValue = parseInt(element.textContent) || 0;
+            
+            if (oldValue === newValue) return;
+            
+            // Add pulse animation
+            element.style.transform = 'scale(1.1)';
+            element.style.transition = 'transform 0.2s ease';
+            
+            setTimeout(() => {
+                element.textContent = newValue.toLocaleString();
+                element.style.transform = 'scale(1)';
+            }, 100);
+        }
+        
+        // Verify token and load data
+        async function verifyAndLoadDashboard() {
+            if (accessToken) {
+                try {
+                    const response = await fetch(`${API_BASE}/api/v1/auth/verify`, {
+                        headers: {
+                            'Authorization': `Bearer ${accessToken}`
+                        }
+                    });
+                    
+                    if (!response.ok) {
+                        throw new Error('Token invalid');
+                    }
+                    
+                    const data = await response.json();
+                    document.getElementById('hospitalId').textContent = data.hospital_id;
+                    
+                    // Load hospital name from registry
+                    const hospitals = {
+                        'hosp_medora': 'Medora Medical Center',
+                        'hosp_mayo_clinic': 'Mayo Clinic',
+                        'admin_user': 'System Administrator'
+                    };
+                    
+                    document.getElementById('hospitalName').textContent = 
+                        hospitals[data.hospital_id] || data.hospital_id;
+                    
+                } catch (error) {
+                    console.error('Verification failed:', error);
+                    // Continue with guest mode
+                    document.getElementById('hospitalName').textContent = 'Guest User';
+                    document.getElementById('hospitalId').textContent = 'Demo Mode';
+                }
+            } else {
+                // Guest mode
+                document.getElementById('hospitalName').textContent = 'Guest User';
+                document.getElementById('hospitalId').textContent = 'Demo Mode';
+            }
+            
+            // Load stats immediately
+            await loadDashboardStats();
+            
+            // Set up auto-refresh every 3 seconds
+            updateInterval = setInterval(loadDashboardStats, 3000);
+        }
+        
+        // Logout handler
+        document.getElementById('logoutBtn').addEventListener('click', async () => {
+            // Clear update interval
+            if (updateInterval) {
+                clearInterval(updateInterval);
+            }
+            
+            if (accessToken) {
+                try {
+                    await fetch(`${API_BASE}/api/v1/auth/logout`, {
+                        method: 'POST',
+                        headers: {
+                            'Authorization': `Bearer ${accessToken}`
+                        }
+                    });
+                } catch (error) {
+                    console.error('Logout error:', error);
+                }
+            }
+            
+            localStorage.clear();
+            window.location.href = '/login.html';
+        });
+        
+        // Initialize
+        verifyAndLoadDashboard();
+        
+        // Clean up on page unload
+        window.addEventListener('beforeunload', () => {
+            if (updateInterval) {
+                clearInterval(updateInterval);
+            }
+        });
+    </script>
+</body>
+</html>

@@ -1,0 +1,295 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Hospital Portal Login | Medora Medicine</title>
+    <link rel="icon"
+        href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>🏥</text></svg>">
+    <link rel="stylesheet" href="/static/css/styles.css?v=3.0">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link
+        href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700;800&family=Inter:wght@300;400;500;600&display=swap"
+        rel="stylesheet">
+    <style>
+        .login-container {
+            min-height: 100vh;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            background: var(--color-pure-black);
+            padding: var(--spacing-xl);
+        }
+
+        .login-card {
+            background: var(--glass-bg);
+            backdrop-filter: blur(20px);
+            -webkit-backdrop-filter: blur(20px);
+            border: 1px solid var(--glass-border);
+            border-radius: var(--radius-xl);
+            padding: var(--spacing-3xl);
+            max-width: 480px;
+            width: 100%;
+            box-shadow: var(--shadow-xl);
+        }
+
+        .login-header {
+            text-align: center;
+            margin-bottom: var(--spacing-2xl);
+        }
+
+        .login-icon {
+            width: 64px;
+            height: 64px;
+            margin: 0 auto var(--spacing-lg);
+        }
+
+        .login-title {
+            font-family: var(--font-heading);
+            font-size: 1.75rem;
+            font-weight: 700;
+            margin-bottom: var(--spacing-sm);
+        }
+
+        .login-subtitle {
+            color: var(--color-text-secondary);
+            font-size: 1rem;
+        }
+
+        .login-form {
+            display: flex;
+            flex-direction: column;
+            gap: var(--spacing-lg);
+        }
+
+        .form-group-login {
+            display: flex;
+            flex-direction: column;
+            gap: var(--spacing-sm);
+        }
+
+        .form-label-login {
+            font-size: 0.875rem;
+            font-weight: 600;
+            color: var(--color-text-primary);
+        }
+
+        .form-input-login {
+            width: 100%;
+            padding: 0.875rem 1rem;
+            background: var(--color-surface);
+            border: 1px solid var(--color-border);
+            border-radius: var(--radius-md);
+            color: var(--color-text-primary);
+            font-size: 0.9375rem;
+            transition: all var(--transition-fast);
+        }
+
+        .form-input-login:focus {
+            outline: none;
+            border-color: var(--color-blue-primary);
+            box-shadow: 0 0 0 3px rgba(74, 158, 255, 0.1);
+        }
+
+        .btn-login {
+            width: 100%;
+            padding: 1rem 2rem;
+            background: var(--gradient-primary);
+            color: white;
+            font-weight: 600;
+            font-size: 1.0625rem;
+            border-radius: var(--radius-full);
+            border: none;
+            cursor: pointer;
+            transition: all var(--transition-fast);
+            box-shadow: var(--shadow-md);
+        }
+
+        .btn-login:hover:not(:disabled) {
+            transform: translateY(-2px);
+            box-shadow: var(--shadow-glow);
+        }
+
+        .btn-login:disabled {
+            opacity: 0.5;
+            cursor: not-allowed;
+        }
+
+        .login-footer {
+            text-align: center;
+            margin-top: var(--spacing-xl);
+            padding-top: var(--spacing-xl);
+            border-top: 1px solid var(--color-border);
+        }
+
+        .login-link {
+            color: var(--color-blue-primary);
+            text-decoration: none;
+            font-size: 0.9375rem;
+            transition: color var(--transition-fast);
+        }
+
+        .login-link:hover {
+            color: var(--color-text-primary);
+        }
+
+        .error-message {
+            padding: var(--spacing-md);
+            background: rgba(239, 68, 68, 0.1);
+            border: 1px solid rgba(239, 68, 68, 0.3);
+            border-radius: var(--radius-md);
+            color: var(--color-error);
+            font-size: 0.875rem;
+            display: none;
+        }
+
+        .credentials-demo {
+            margin-top: var(--spacing-xl);
+            padding: var(--spacing-lg);
+            background: rgba(74, 158, 255, 0.05);
+            border: 1px solid rgba(74, 158, 255, 0.2);
+            border-radius: var(--radius-md);
+        }
+
+        .credentials-demo h4 {
+            font-size: 0.875rem;
+            font-weight: 600;
+            color: var(--color-blue-primary);
+            margin-bottom: var(--spacing-sm);
+            text-transform: uppercase;
+            letter-spacing: 0.05em;
+        }
+
+        .credentials-demo code {
+            display: block;
+            font-family: 'Monaco', monospace;
+            font-size: 0.8125rem;
+            color: var(--color-text-secondary);
+            line-height: 1.6;
+        }
+    </style>
+</head>
+
+<body>
+    <div class="login-container">
+        <div class="login-card">
+            <div class="login-header">
+                <svg class="login-icon" viewBox="0 0 64 64" fill="none">
+                    <defs>
+                        <linearGradient id="login-gradient" x1="0%" y1="0%" x2="100%" y2="100%">
+                            <stop offset="0%" stop-color="#4A9EFF" />
+                            <stop offset="100%" stop-color="#1E40AF" />
+                        </linearGradient>
+                    </defs>
+                    <rect x="8" y="12" width="48" height="40" rx="4" stroke="url(#login-gradient)" stroke-width="3"
+                        fill="none" />
+                    <circle cx="32" cy="26" r="6" stroke="url(#login-gradient)" stroke-width="3" fill="none" />
+                    <path d="M20 44C20 38 26 34 32 34C38 34 44 38 44 44" stroke="url(#login-gradient)" stroke-width="3"
+                        stroke-linecap="round" />
+                </svg>
+                <h1 class="login-title">Hospital Portal</h1>
+                <p class="login-subtitle">Sign in to access medical AI platform</p>
+            </div>
+
+            <div class="error-message" id="errorMessage"></div>
+
+            <form class="login-form" id="loginForm">
+                <div class="form-group-login">
+                    <label class="form-label-login" for="hospitalId">Hospital ID</label>
+                    <input type="text" id="hospitalId" class="form-input-login" placeholder="e.g., hosp_medora"
+                        required>
+                </div>
+
+                <div class="form-group-login">
+                    <label class="form-label-login" for="password">Password</label>
+                    <input type="password" id="password" class="form-input-login" placeholder="Enter your password"
+                        required>
+                </div>
+
+                <button type="submit" class="btn-login" id="loginBtn">
+                    Sign In
+                </button>
+                <div style="text-align: center; margin-top: 1rem;">
+                    <a href="/static/hospital_onboarding.html"
+                        style="color: #4A9EFF; text-decoration: none; font-size: 0.9rem;">🏥 Register New Hospital
+                        Node</a>
+                </div>
+            </form>
+
+            <div class="credentials-demo">
+                <h4>🔑 Demo Credentials</h4>
+                <code>
+
+
+                    <strong>Mayo Clinic:</strong><br>
+                    ID: hosp_mayo_clinic<br>
+                    PW: Mayo_SecurePass_2025!<br><br>
+                    
+                    <strong>Admin:</strong><br>
+                    ID: admin_user<br>
+                    PW: Admin_SecurePass_2025!
+                </code>
+            </div>
+
+            <div class="login-footer">
+                <a href="/" class="login-link">← Back to Homepage</a>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        const API_BASE = window.location.origin;
+        const loginForm = document.getElementById('loginForm');
+        const errorMessage = document.getElementById('errorMessage');
+        const loginBtn = document.getElementById('loginBtn');
+
+        loginForm.addEventListener('submit', async (e) => {
+            e.preventDefault();
+
+            const hospitalId = document.getElementById('hospitalId').value;
+            const password = document.getElementById('password').value;
+
+            loginBtn.disabled = true;
+            loginBtn.textContent = 'Signing In...';
+            errorMessage.style.display = 'none';
+
+            try {
+                const response = await fetch(`${API_BASE}/api/v1/auth/login`, {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json'
+                    },
+                    body: JSON.stringify({
+                        hospital_id: hospitalId,
+                        password: password
+                    })
+                });
+
+                if (!response.ok) {
+                    const error = await response.json();
+                    throw new Error(error.detail || 'Login failed');
+                }
+
+                const data = await response.json();
+
+                // Store tokens
+                localStorage.setItem('access_token', data.access_token);
+                localStorage.setItem('refresh_token', data.refresh_token);
+                localStorage.setItem('hospital_id', hospitalId);
+
+                // Redirect to dashboard
+                window.location.href = '/dashboard.html';
+
+            } catch (error) {
+                errorMessage.textContent = error.message;
+                errorMessage.style.display = 'block';
+                loginBtn.disabled = false;
+                loginBtn.textContent = 'Sign In';
+            }
+        });
+    </script>
+</body>
+
+</html>

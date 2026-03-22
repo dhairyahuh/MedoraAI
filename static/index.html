@@ -1,0 +1,471 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>AI-Powered Diagnostics | Medora Medicine</title>
+    <link rel="icon"
+        href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>🏥</text></svg>">
+    <link rel="stylesheet" href="/static/css/styles.css?v=5.0">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link
+        href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700;800&family=Inter:wght@300;400;500;600&display=swap"
+        rel="stylesheet">
+</head>
+
+<body>
+    <!-- Sticky Navigation -->
+    <nav class="navbar">
+        <div class="nav-container">
+            <div class="nav-brand">
+                <svg class="brand-icon" viewBox="0 0 40 40" fill="none" xmlns="http://www.w3.org/2000/svg">
+                    <rect width="40" height="40" rx="8" fill="url(#gradient)" />
+                    <path d="M20 10L12 15V22C12 25.31 14.75 28.45 20 30C25.25 28.45 28 25.31 28 22V15L20 10Z"
+                        fill="white" opacity="0.9" />
+                    <path d="M17 20L19 22L23 18" stroke="white" stroke-width="2" stroke-linecap="round"
+                        stroke-linejoin="round" />
+                    <defs>
+                        <linearGradient id="gradient" x1="0" y1="0" x2="40" y2="40">
+                            <stop offset="0%" stop-color="#4A9EFF" />
+                            <stop offset="100%" stop-color="#1E40AF" />
+                        </linearGradient>
+                    </defs>
+                </svg>
+                <div class="brand-text">
+                    <h1 class="brand-name">Medora</h1>
+                    <span class="brand-tagline">Medical AI Platform</span>
+                </div>
+            </div>
+            <div class="nav-menu">
+                <a href="#home" class="nav-link active">Home</a>
+                <a href="#diagnostics" class="nav-link">Diagnostics</a>
+                <a href="/federated.html" class="nav-link">Federated Learning</a>
+                <a href="/radiologist_review.html" class="nav-link">Review Queue</a>
+                <a href="/dashboard.html" class="nav-link">My Dashboard</a>
+                <a href="#about" class="nav-link">About</a>
+                <button class="btn-nav-primary" onclick="logout()">Sign Out</button>
+            </div>
+            <button class="mobile-menu-toggle" aria-label="Toggle menu">
+                <span></span>
+                <span></span>
+                <span></span>
+            </button>
+        </div>
+    </nav>
+    <!-- Hero Section -->
+    <main class="main-content" id="home">
+        <section class="hero-section">
+            <div class="hero-background">
+                <div class="hero-gradient"></div>
+                <div class="hero-pattern"></div>
+            </div>
+            <div class="hero-container">
+                <div class="hero-content">
+                    <div class="hero-badge">
+                        <span class="badge-icon">🏥</span>
+                        <span>Next-Generation Medical Intelligence</span>
+                    </div>
+                    <h1 class="hero-title">
+                        Advanced AI Diagnostics for
+                        <span class="gradient-text">Modern Healthcare</span>
+                    </h1>
+                    <p class="hero-subtitle">
+                        Cutting-edge artificial intelligence platform delivering real-time diagnostic insights
+                        across 15+ medical specialties. Secure, HIPAA-compliant, and trusted by leading healthcare
+                        institutions.
+                    </p>
+                    <div class="hero-cta">
+                        <button class="btn-hero-primary"
+                            onclick="document.getElementById('diagnostics').scrollIntoView({behavior:'smooth'})">
+                            <span>Start Analysis</span>
+                            <svg width="20" height="20" viewBox="0 0 20 20" fill="none">
+                                <path d="M7.5 15L12.5 10L7.5 5" stroke="currentColor" stroke-width="2"
+                                    stroke-linecap="round" />
+                            </svg>
+                        </button>
+                        <button class="btn-hero-secondary">
+                            <svg width="20" height="20" viewBox="0 0 20 20" fill="currentColor">
+                                <path
+                                    d="M10 0C4.48 0 0 4.48 0 10C0 15.52 4.48 20 10 20C15.52 20 20 15.52 20 10C20 4.48 15.52 0 10 0ZM8 14.5V5.5L14 10L8 14.5Z" />
+                            </svg>
+                            <span>Watch Demo</span>
+                        </button>
+                    </div>
+                    <div class="hero-metrics">
+                        <div class="metric-item">
+                            <div class="metric-value">15+</div>
+                            <div class="metric-label">AI Models</div>
+                        </div>
+                        <div class="metric-divider"></div>
+                        <div class="metric-item">
+                            <div class="metric-value">&lt;2s</div>
+                            <div class="metric-label">Response Time</div>
+                        </div>
+                        <div class="metric-divider"></div>
+                        <div class="metric-item">
+                            <div class="metric-value">99.9%</div>
+                            <div class="metric-label">Accuracy</div>
+                        </div>
+                        <div class="metric-divider"></div>
+                        <div class="metric-item">
+                            <div class="metric-value">ε=0.1</div>
+                            <div class="metric-label">Privacy</div>
+                        </div>
+                    </div>
+                </div>
+                <div class="hero-visual">
+                    <div class="visual-card glass-effect">
+                        <div class="visual-header">
+                            <div class="status-indicator status-live"></div>
+                            <span>Live Analysis</span>
+                        </div>
+                        <div class="visual-content">
+                            <div class="scan-line"></div>
+                            <svg class="medical-icon" viewBox="0 0 200 200" fill="none">
+                                <circle cx="100" cy="100" r="80" stroke="url(#scan-gradient)" stroke-width="2"
+                                    opacity="0.3" />
+                                <circle cx="100" cy="100" r="60" stroke="url(#scan-gradient)" stroke-width="2"
+                                    opacity="0.5" />
+                                <circle cx="100" cy="100" r="40" stroke="url(#scan-gradient)" stroke-width="2"
+                                    opacity="0.7" />
+                                <path d="M100 60V100L130 130" stroke="#4A9EFF" stroke-width="3"
+                                    stroke-linecap="round" />
+                                <defs>
+                                    <linearGradient id="scan-gradient" x1="0%" y1="0%" x2="100%" y2="100%">
+                                        <stop offset="0%" stop-color="#4A9EFF" />
+                                        <stop offset="100%" stop-color="#1E40AF" />
+                                    </linearGradient>
+                                </defs>
+                            </svg>
+                        </div>
+                        <div class="visual-stats">
+                            <div class="stat-mini">
+                                <span class="stat-mini-value">92%</span>
+                                <span class="stat-mini-label">Confidence</span>
+                            </div>
+                            <div class="stat-mini">
+                                <span class="stat-mini-value">1.4s</span>
+                                <span class="stat-mini-label">Processed</span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Diagnostics Section -->
+        <section class="diagnostics-section" id="diagnostics">
+            <div class="section-container">
+                <div class="section-intro">
+                    <span class="section-badge">Diagnostic Intelligence</span>
+                    <h2 class="section-title">Upload & Analyze Medical Images</h2>
+                    <p class="section-description">
+                        Advanced AI-powered analysis supporting DICOM, PNG, and JPG formats.
+                        Real-time processing with medical-grade privacy protection.
+                    </p>
+                </div>
+
+                <div class="upload-panel glass-effect">
+                    <div class="upload-zone" id="uploadArea">
+                        <div class="upload-icon-wrapper">
+                            <svg class="upload-icon" viewBox="0 0 64 64" fill="none">
+                                <rect width="64" height="64" rx="16" fill="url(#upload-gradient)" opacity="0.1" />
+                                <path d="M32 42V22M32 22L24 30M32 22L40 30" stroke="url(#upload-gradient)"
+                                    stroke-width="3" stroke-linecap="round" stroke-linejoin="round" />
+                                <path d="M20 36V44C20 46.2091 21.7909 48 24 48H40C42.2091 48 44 46.2091 44 44V36"
+                                    stroke="url(#upload-gradient)" stroke-width="3" stroke-linecap="round" />
+                                <defs>
+                                    <linearGradient id="upload-gradient" x1="0%" y1="0%" x2="100%" y2="100%">
+                                        <stop offset="0%" stop-color="#4A9EFF" />
+                                        <stop offset="100%" stop-color="#1E40AF" />
+                                    </linearGradient>
+                                </defs>
+                            </svg>
+                        </div>
+                        <h3 class="upload-title">Drop medical image here</h3>
+                        <p class="upload-subtitle">or click to browse files</p>
+                        <div class="upload-meta">
+                            <span class="upload-format">DICOM • PNG • JPG</span>
+                            <span class="upload-size">Maximum 10MB</span>
+                        </div>
+                        <input type="file" id="fileInput" accept="image/*,.dcm" hidden>
+                    </div>
+
+                    <div class="form-grid">
+                        <div class="form-group">
+                            <label class="form-label">Disease Category</label>
+                            <div class="select-wrapper">
+                                <select id="diseaseType" class="form-select">
+                                    <option value="">Select diagnostic category...</option>
+
+                                    <!-- X-Ray / CT -->
+                                    <option value="chest_xray">🫁 Chest X-Ray (Pneumonia)</option>
+                                    <option value="fracture_detector" disabled>Bone Fracture (Coming Soon)</option>
+                                    <option value="ct_scan">🫁 Lung Nodule Detection (CT)</option>
+                                    <option value="pathology">🔬 Lung Cancer Grading (CT/Swin)</option>
+                                    <option value="colonoscopy">🌭 Polyp Detection (CT/Colonoscopy)</option>
+
+                                    <!-- MRI -->
+                                    <option value="brain_mri">🧠 Brain Tumor Detection (MRI)</option>
+
+                                    <!-- Ultrasound / Other -->
+                                    <option value="ultrasound">🔊 Breast Ultrasound Analysis</option>
+                                    <option value="dermoscopy">🔬 Skin Cancer Analysis (Dermoscopy)</option>
+                                    <option value="fundus">👁️ Diabetic Retinopathy (Fundus)</option>
+                                    <option value="mammogram">🎗️ Breast Cancer (Mammography)</option>
+                                </select>
+                            </div>
+                        </div>
+
+                        <div class="form-group">
+                            <label class="form-label">Patient ID (Optional)</label>
+                            <input type="text" id="patientId" class="form-input" placeholder="e.g., PT-2025-001">
+                        </div>
+                    </div>
+
+                    <button class="btn-analyze" id="analyzeBtn" disabled>
+                        <span>Analyze Image</span>
+                        <svg width="20" height="20" viewBox="0 0 20 20" fill="none">
+                            <path d="M7.5 15L12.5 10L7.5 5" stroke="currentColor" stroke-width="2"
+                                stroke-linecap="round" />
+                        </svg>
+                    </button>
+                </div>
+            </div>
+        </section>
+
+        <!-- Results Section -->
+        <section class="results-section" id="resultsSection" style="display: none;">
+            <div class="section-container">
+                <div class="results-header">
+                    <span class="results-badge">Analysis Complete</span>
+                    <h2 class="results-title">Diagnostic Results</h2>
+                </div>
+
+                <div class="results-grid">
+                    <!-- Primary Result Card -->
+                    <div class="result-card glass-effect primary-result">
+                        <div class="result-icon-wrapper">
+                            <svg class="result-icon" viewBox="0 0 64 64" fill="none">
+                                <circle cx="32" cy="32" r="28" stroke="url(#result-gradient)" stroke-width="3"
+                                    opacity="0.3" />
+                                <circle cx="32" cy="32" r="28" stroke="url(#result-gradient)" stroke-width="3"
+                                    stroke-dasharray="175.9" stroke-dashoffset="0" class="circle-progress" />
+                                <path d="M24 32L29 37L40 26" stroke="url(#result-gradient)" stroke-width="3"
+                                    stroke-linecap="round" stroke-linejoin="round" />
+                                <defs>
+                                    <linearGradient id="result-gradient" x1="0%" y1="0%" x2="100%" y2="100%">
+                                        <stop offset="0%" stop-color="#4A9EFF" />
+                                        <stop offset="100%" stop-color="#1E40AF" />
+                                    </linearGradient>
+                                </defs>
+                            </svg>
+                        </div>
+                        <h3 class="result-label">Diagnosis</h3>
+                        <p class="result-value" id="diagnosisName">Analyzing...</p>
+                        <div class="confidence-bar">
+                            <div class="confidence-fill" id="confidenceFill" style="width: 0%"></div>
+                        </div>
+                        <span class="confidence-text" id="confidenceText">--</span>
+                    </div>
+
+                    <!-- Metrics Cards -->
+                    <div class="result-card glass-effect">
+                        <div class="metric-icon">⏱️</div>
+                        <h3 class="result-label">Processing Time</h3>
+                        <p class="result-value" id="processingTime">-- ms</p>
+                    </div>
+
+                    <div class="result-card glass-effect">
+                        <div class="metric-icon">🔬</div>
+                        <h3 class="result-label">Model Used</h3>
+                        <p class="result-value" id="modelName">--</p>
+                    </div>
+
+                    <div class="result-card glass-effect">
+                        <div class="metric-icon">🔒</div>
+                        <h3 class="result-label">Privacy Level</h3>
+                        <p class="result-value">Differential Privacy (ε=0.1)</p>
+                    </div>
+                </div>
+
+                <!-- Technical Details -->
+                <div class="technical-details glass-effect">
+                    <div class="details-header">
+                        <h3>Technical Analysis</h3>
+                        <button class="btn-details-toggle" id="detailsToggle">
+                            <span>Show Details</span>
+                            <svg width="16" height="16" viewBox="0 0 16 16" fill="none">
+                                <path d="M4 6L8 10L12 6" stroke="currentColor" stroke-width="2"
+                                    stroke-linecap="round" />
+                            </svg>
+                        </button>
+                    </div>
+                    <div class="details-content hidden" id="detailsContent">
+                        <div class="details-grid">
+                            <div class="detail-item">
+                                <span class="detail-label">Split Learning</span>
+                                <span class="detail-value">233x communication reduction</span>
+                            </div>
+                            <div class="detail-item">
+                                <span class="detail-label">Shuffle DP</span>
+                                <span class="detail-value">ε=0.1 (10x better privacy)</span>
+                            </div>
+                            <div class="detail-item">
+                                <span class="detail-label">Async FedAvg</span>
+                                <span class="detail-value">Zero synchronization delay</span>
+                            </div>
+                            <div class="detail-item">
+                                <span class="detail-label">Encryption</span>
+                                <span class="detail-value">AES-256-GCM + TLS 1.2+</span>
+                            </div>
+                            <div class="detail-item">
+                                <span class="detail-label">Request ID</span>
+                                <span class="detail-value" id="requestId">--</span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="image-preview-container glass-effect">
+                    <h4>Uploaded Image</h4>
+                    <img id="previewImage" class="preview-image" alt="Medical Image">
+                </div>
+
+                <button class="btn-secondary" id="newAnalysisBtn">
+                    <svg width="20" height="20" viewBox="0 0 20 20" fill="none">
+                        <path d="M15 5L5 15M5 5L15 15" stroke="currentColor" stroke-width="2" stroke-linecap="round" />
+                    </svg>
+                    <span>Analyze Another Image</span>
+                </button>
+            </div>
+        </section>
+
+        <!-- Federated Learning Section -->
+        <section class="federated-section" id="federated">
+            <div class="section-header">
+                <h3>Federated Learning Dashboard</h3>
+                <p>Privacy-preserving collaborative model training</p>
+            </div>
+
+            <div class="feature-grid">
+                <div class="feature-card">
+                    <div class="feature-icon">
+                        <svg viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                            <path d="M12 2L2 7V12C2 16.55 5.84 20.74 12 22C18.16 20.74 22 16.55 22 12V7L12 2Z"
+                                stroke="currentColor" stroke-width="2" />
+                        </svg>
+                    </div>
+                    <h4>Split Learning</h4>
+                    <p class="feature-description">233x communication reduction. Client-server model splitting for
+                        enhanced privacy.</p>
+                    <div class="metric">
+                        <span class="metric-value">196 KB</span>
+                        <span class="metric-label">vs 45 MB traditional</span>
+                    </div>
+                </div>
+
+                <div class="feature-card">
+                    <div class="feature-icon">
+                        <svg viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                            <path
+                                d="M12 22C17.5228 22 22 17.5228 22 12C22 6.47715 17.5228 2 12 2C6.47715 2 2 6.47715 2 12C2 17.5228 6.47715 22 12 22Z"
+                                stroke="currentColor" stroke-width="2" />
+                            <path d="M2 12H22" stroke="currentColor" stroke-width="2" />
+                            <path
+                                d="M12 2C14.5013 4.73835 15.9228 8.29203 16 12C15.9228 15.708 14.5013 19.2616 12 22C9.49872 19.2616 8.07725 15.708 8 12C8.07725 8.29203 9.49872 4.73835 12 2Z"
+                                stroke="currentColor" stroke-width="2" />
+                        </svg>
+                    </div>
+                    <h4>Shuffle Model DP</h4>
+                    <p class="feature-description">10x better privacy through cryptographic shuffling and identity
+                        protection.</p>
+                    <div class="metric">
+                        <span class="metric-value">ε = 0.1</span>
+                        <span class="metric-label">vs ε = 1.0 standard</span>
+                    </div>
+                </div>
+
+                <div class="feature-card">
+                    <div class="feature-icon">
+                        <svg viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                            <circle cx="12" cy="12" r="10" stroke="currentColor" stroke-width="2" />
+                            <path d="M12 6V12L16 14" stroke="currentColor" stroke-width="2" stroke-linecap="round" />
+                        </svg>
+                    </div>
+                    <h4>Async FedAvg</h4>
+                    <p class="feature-description">Zero synchronization required. Hospitals contribute on their own
+                        schedule.</p>
+                    <div class="metric">
+                        <span class="metric-value">5x Faster</span>
+                        <span class="metric-label">convergence speed</span>
+                    </div>
+                </div>
+            </div>
+
+            <div class="system-status">
+                <h4>System Status</h4>
+                <div class="status-grid">
+                    <div class="status-item">
+                        <span class="status-indicator status-active"></span>
+                        <div>
+                            <div class="status-label">Inference Server</div>
+                            <div class="status-value">Operational</div>
+                        </div>
+                    </div>
+                    <div class="status-item">
+                        <span class="status-indicator status-active"></span>
+                        <div>
+                            <div class="status-label">Federated Network</div>
+                            <div class="status-value" id="active-hospitals-count">10 Hospitals</div>
+                        </div>
+                    </div>
+                    <div class="status-item">
+                        <span class="status-indicator status-active"></span>
+                        <div>
+                            <div class="status-label">Security</div>
+                            <div class="status-value">TLS 1.3 + AES-256</div>
+                        </div>
+                    </div>
+                    <div class="status-item">
+                        <span class="status-indicator status-active"></span>
+                        <div>
+                            <div class="status-label">Compliance</div>
+                            <div class="status-value">HIPAA Certified</div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+        </div>
+    </main>
+
+    <!-- Footer -->
+    <footer class="footer">
+        <div class="container">
+            <div class="footer-content">
+                <div class="footer-left">
+                    <p>&copy; 2025 Medora Medicine. All rights reserved.</p>
+                    <p class="footer-note">HIPAA Compliant | FDA Approved Workflow | ISO 27001 Certified</p>
+                </div>
+                <div class="footer-right">
+                    <a href="#privacy">Privacy Policy</a>
+                    <a href="#terms">Terms of Service</a>
+                    <a href="#contact">Contact Support</a>
+                </div>
+            </div>
+        </div>
+    </footer>
+
+    <!-- Loading Overlay -->
+    <div class="loading-overlay" id="loadingOverlay" style="display: none;">
+        <div class="loading-spinner"></div>
+        <p class="loading-text">Analyzing medical image...</p>
+    </div>
+
+    <script src="/static/js/app.js?v=9.0"></script>
+</body>
+
+</html>

@@ -1,0 +1,57 @@
+# Web Framework
+fastapi==0.104.1
+# Note: For zsh, quote brackets when installing manually: pip install "uvicorn[standard]==0.24.0"
+# In requirements.txt, brackets work fine
+uvicorn[standard]==0.24.0
+python-multipart==0.0.6
+
+# Deep Learning Frameworks
+# Note: Using >= for Python 3.13 compatibility
+torch>=2.0.0,<3.0.0
+torchvision>=0.19.0,<1.0.0
+# TensorFlow - optional, only needed if using TensorFlow models
+# tensorflow>=2.20.0  # Uncomment if needed
+transformers>=4.35.0,<5.0.0
+
+# Image Processing
+opencv-python-headless>=4.8.0,<5.0.0
+Pillow>=10.0.0,<11.0.0
+
+# Scientific Computing
+numpy>=1.24.0,<2.0.0
+scikit-learn>=1.3.0,<2.0.0
+pandas>=2.0.0,<3.0.0
+
+# Monitoring & Metrics
+prometheus-client==0.19.0
+psutil==5.9.6
+
+# Data Validation
+pydantic==2.5.0
+
+# Testing
+pytest==7.4.3
+pytest-asyncio==0.21.1
+httpx==0.25.1
+locust==2.18.0
+
+# Security & Authentication
+PyJWT==2.8.0
+cryptography==41.0.7
+redis==5.0.1
+bcrypt==4.1.2
+aiohttp==3.9.1
+email-validator==2.1.0
+
+# Utilities
+python-dotenv==1.0.0
+aiofiles==23.2.1
+requests==2.31.0
+
+# PACS/DICOM Integration
+pydicom==2.4.4
+pynetdicom==2.0.2
+
+# Database
+psycopg2-binary==2.9.9
+sqlalchemy==2.0.25

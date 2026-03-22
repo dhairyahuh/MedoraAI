@@ -1,0 +1,768 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="Cache-Control" content="no-cache, no-store, must-revalidate">
+    <meta http-equiv="Pragma" content="no-cache">
+    <meta http-equiv="Expires" content="0">
+    <title>Radiologist Review Dashboard - Medical AI</title>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+            background: #000000;
+            min-height: 100vh;
+            color: #FFFFFF;
+            line-height: 1.6;
+        }
+
+        /* Sticky Navbar */
+        .navbar {
+            position: sticky;
+            top: 0;
+            background: rgba(26, 26, 26, 0.95);
+            backdrop-filter: blur(20px);
+            border-bottom: 1px solid rgba(217, 217, 217, 0.1);
+            padding: 1rem 0;
+            z-index: 1000;
+            transition: all 0.3s ease;
+        }
+
+        .navbar-content {
+            max-width: 1400px;
+            margin: 0 auto;
+            padding: 0 2rem;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .navbar-brand {
+            font-size: 1.5rem;
+            font-weight: 700;
+            color: #FFFFFF;
+            letter-spacing: -0.5px;
+        }
+
+        .navbar-links {
+            display: flex;
+            gap: 2rem;
+            align-items: center;
+        }
+
+        .navbar-links a {
+            color: #D9D9D9;
+            text-decoration: none;
+            font-weight: 500;
+            transition: color 0.3s ease;
+            font-size: 0.95rem;
+        }
+
+        .navbar-links a:hover {
+            color: #FFFFFF;
+        }
+
+        .nav-cta {
+            background: linear-gradient(135deg, #4A9EFF 0%, #2E7FE8 100%);
+            color: white !important;
+            padding: 0.6rem 1.5rem;
+            border-radius: 8px;
+            font-weight: 600;
+            transition: all 0.3s ease;
+            box-shadow: 0 4px 15px rgba(74, 158, 255, 0.2);
+        }
+
+        .nav-cta:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 6px 20px rgba(74, 158, 255, 0.35);
+        }
+
+        .container {
+            max-width: 1400px;
+            margin: 0 auto;
+            padding: 4rem 2rem;
+        }
+
+        .header {
+            text-align: center;
+            margin-bottom: 4rem;
+            animation: fadeIn 0.8s ease;
+        }
+
+        .header h1 {
+            font-size: 3rem;
+            font-weight: 700;
+            margin-bottom: 1rem;
+            background: linear-gradient(135deg, #FFFFFF 0%, #D9D9D9 100%);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+            letter-spacing: -1px;
+        }
+
+        .header p {
+            font-size: 1.1rem;
+            color: #D9D9D9;
+            font-weight: 300;
+        }
+
+        .stats-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+            gap: 2rem;
+            margin-bottom: 4rem;
+            animation: fadeIn 0.8s ease 0.2s backwards;
+        }
+
+        .stat-card {
+            background: linear-gradient(135deg, rgba(26, 26, 26, 0.8) 0%, rgba(47, 47, 47, 0.6) 100%);
+            backdrop-filter: blur(20px);
+            border: 1px solid rgba(217, 217, 217, 0.1);
+            border-radius: 16px;
+            padding: 2rem;
+            text-align: center;
+            transition: all 0.4s ease;
+            box-shadow: 0 8px 32px rgba(0, 0, 0, 0.3);
+        }
+
+        .stat-card:hover {
+            transform: translateY(-8px);
+            border-color: rgba(74, 158, 255, 0.3);
+            box-shadow: 0 12px 48px rgba(74, 158, 255, 0.15);
+        }
+
+        .stat-card h3 {
+            color: #D9D9D9;
+            font-size: 0.8rem;
+            text-transform: uppercase;
+            letter-spacing: 1.5px;
+            margin-bottom: 1rem;
+            font-weight: 600;
+        }
+
+        .stat-card .value {
+            font-size: 3rem;
+            font-weight: 700;
+            color: #FFFFFF;
+            margin-bottom: 0.5rem;
+        }
+
+        .review-card {
+            background: linear-gradient(135deg, rgba(26, 26, 26, 0.9) 0%, rgba(47, 47, 47, 0.7) 100%);
+            backdrop-filter: blur(20px);
+            border: 1px solid rgba(217, 217, 217, 0.1);
+            border-radius: 20px;
+            padding: 3rem;
+            margin-bottom: 3rem;
+            box-shadow: 0 20px 60px rgba(0, 0, 0, 0.5);
+            animation: fadeIn 0.8s ease 0.4s backwards;
+        }
+
+        .review-card h2 {
+            color: #FFFFFF;
+            font-size: 1.8rem;
+            font-weight: 700;
+            margin-bottom: 2rem;
+            letter-spacing: -0.5px;
+        }
+
+        .review-content {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 3rem;
+        }
+
+        .image-viewer {
+            background: rgba(0, 0, 0, 0.5);
+            border-radius: 16px;
+            padding: 1.5rem;
+            border: 1px solid rgba(217, 217, 217, 0.1);
+        }
+
+        .medical-image {
+            width: 100%;
+            height: auto;
+            border-radius: 12px;
+            box-shadow: 0 8px 32px rgba(0, 0, 0, 0.4);
+        }
+
+        .image-meta {
+            margin-top: 1.5rem;
+            padding: 1rem;
+            background: rgba(47, 47, 47, 0.5);
+            border-radius: 10px;
+            font-size: 0.9rem;
+            color: #D9D9D9;
+            border: 1px solid rgba(217, 217, 217, 0.05);
+            line-height: 1.8;
+        }
+
+        .review-details {
+            display: flex;
+            flex-direction: column;
+            gap: 2rem;
+        }
+
+        .ai-prediction {
+            background: linear-gradient(135deg, rgba(47, 47, 47, 0.5) 0%, rgba(26, 26, 26, 0.5) 100%);
+            padding: 2rem;
+            border-radius: 16px;
+            border: 1px solid rgba(217, 217, 217, 0.1);
+            transition: all 0.3s ease;
+        }
+
+        .ai-prediction:hover {
+            border-color: rgba(74, 158, 255, 0.3);
+        }
+
+        .prediction-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 1.5rem;
+        }
+
+        .ai-prediction h3 {
+            color: #FFFFFF;
+            font-size: 1.2rem;
+            font-weight: 600;
+        }
+
+        .confidence-badge {
+            background: linear-gradient(135deg, #4A9EFF 0%, #2E7FE8 100%);
+            color: white;
+            padding: 0.5rem 1.2rem;
+            border-radius: 20px;
+            font-weight: 600;
+            font-size: 0.9rem;
+            box-shadow: 0 4px 15px rgba(74, 158, 255, 0.3);
+        }
+
+        .confidence-bar {
+            width: 100%;
+            height: 12px;
+            background: rgba(217, 217, 217, 0.1);
+            border-radius: 10px;
+            overflow: hidden;
+            margin: 1.5rem 0;
+        }
+
+        .confidence-fill {
+            height: 100%;
+            background: linear-gradient(90deg, #4A9EFF 0%, #2E7FE8 100%);
+            transition: width 0.8s ease;
+            box-shadow: 0 0 20px rgba(74, 158, 255, 0.5);
+        }
+
+        .label-section {
+            background: linear-gradient(135deg, rgba(47, 47, 47, 0.5) 0%, rgba(26, 26, 26, 0.5) 100%);
+            border: 1px solid rgba(217, 217, 217, 0.1);
+            padding: 2rem;
+            border-radius: 16px;
+        }
+
+        .label-section h3 {
+            color: #FFFFFF;
+            margin-bottom: 1.5rem;
+            font-size: 1.2rem;
+            font-weight: 600;
+        }
+
+        .label-options {
+            display: grid;
+            grid-template-columns: repeat(2, 1fr);
+            gap: 1.5rem;
+            margin: 2rem 0;
+        }
+
+        .label-option {
+            padding: 1.5rem;
+            border: 2px solid rgba(217, 217, 217, 0.1);
+            border-radius: 12px;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            text-align: center;
+            background: rgba(47, 47, 47, 0.3);
+            font-weight: 500;
+            color: #FFFFFF;
+        }
+
+        .label-option:hover {
+            border-color: rgba(74, 158, 255, 0.5);
+            background: rgba(74, 158, 255, 0.1);
+            transform: translateY(-4px);
+            box-shadow: 0 8px 24px rgba(74, 158, 255, 0.2);
+        }
+
+        .label-option.selected {
+            border-color: #4A9EFF;
+            background: linear-gradient(135deg, #4A9EFF 0%, #2E7FE8 100%);
+            color: white;
+            box-shadow: 0 8px 24px rgba(74, 158, 255, 0.4);
+        }
+
+        .action-buttons {
+            display: flex;
+            gap: 1.5rem;
+            margin-top: 2rem;
+        }
+
+        .btn {
+            flex: 1;
+            padding: 1rem 2rem;
+            border: none;
+            border-radius: 12px;
+            font-size: 1rem;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            font-family: 'Inter', sans-serif;
+        }
+
+        .btn-primary {
+            background: linear-gradient(135deg, #4A9EFF 0%, #2E7FE8 100%);
+            color: white;
+            box-shadow: 0 4px 15px rgba(74, 158, 255, 0.3);
+        }
+
+        .btn-primary:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 8px 25px rgba(74, 158, 255, 0.45);
+        }
+
+        .btn-secondary {
+            background: rgba(47, 47, 47, 0.5);
+            color: #D9D9D9;
+            border: 2px solid rgba(217, 217, 217, 0.2);
+        }
+
+        .btn-secondary:hover {
+            background: rgba(47, 47, 47, 0.8);
+            border-color: rgba(217, 217, 217, 0.4);
+            transform: translateY(-2px);
+        }
+
+        .btn:disabled {
+            opacity: 0.5;
+            cursor: not-allowed;
+            transform: none !important;
+        }
+
+        .empty-state {
+            background: linear-gradient(135deg, rgba(26, 26, 26, 0.9) 0%, rgba(47, 47, 47, 0.7) 100%);
+            border-radius: 20px;
+            padding: 4rem 2rem;
+            text-align: center;
+            box-shadow: 0 20px 60px rgba(0, 0, 0, 0.5);
+            border: 1px solid rgba(217, 217, 217, 0.1);
+        }
+
+        .empty-state h3 {
+            color: #FFFFFF;
+            font-size: 2rem;
+            margin-bottom: 1rem;
+        }
+
+        .empty-state p {
+            color: #D9D9D9;
+            font-size: 1.1rem;
+        }
+
+        .patient-info {
+            background: rgba(47, 47, 47, 0.3);
+            padding: 1.5rem;
+            border-radius: 12px;
+            margin-bottom: 2rem;
+            border: 1px solid rgba(217, 217, 217, 0.1);
+        }
+
+        .patient-info h4 {
+            color: #FFFFFF;
+            margin-bottom: 1rem;
+            font-weight: 600;
+        }
+
+        .info-grid {
+            display: grid;
+            grid-template-columns: repeat(2, 1fr);
+            gap: 1rem;
+            font-size: 0.9rem;
+        }
+
+        .info-item {
+            color: #D9D9D9;
+        }
+
+        .info-item strong {
+            color: #FFFFFF;
+            font-weight: 600;
+        }
+
+        /* Animations */
+        @keyframes fadeIn {
+            from {
+                opacity: 0;
+                transform: translateY(20px);
+            }
+
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        /* Responsive Design */
+        @media (max-width: 1024px) {
+            .review-content {
+                grid-template-columns: 1fr;
+            }
+
+            .label-options {
+                grid-template-columns: 1fr;
+            }
+        }
+
+        @media (max-width: 768px) {
+            .header h1 {
+                font-size: 2rem;
+            }
+
+            .stats-grid {
+                grid-template-columns: repeat(2, 1fr);
+            }
+
+            .action-buttons {
+                flex-direction: column;
+            }
+
+            .navbar-links {
+                display: none;
+            }
+        }
+    </style>
+</head>
+
+<body>
+    <!-- Sticky Navbar -->
+    <nav class="navbar">
+        <div class="navbar-content">
+            <div class="navbar-brand">MedAI</div>
+            <div class="navbar-links">
+                <a href="/">Home</a>
+                <a href="/federated.html">Federated Learning</a>
+                <a href="/radiologist_review.html">Review Dashboard</a>
+                <a href="#" class="nav-cta">Sign Out</a>
+            </div>
+        </div>
+    </nav>
+
+    <div class="container">
+        <div class="header">
+            <h1>Radiologist Review Dashboard</h1>
+            <p>AI-Assisted Medical Image Review & Validation System</p>
+        </div>
+
+        <!-- Statistics -->
+        <div class="stats-grid">
+            <div class="stat-card">
+                <h3>Pending Reviews</h3>
+                <div class="value" id="pending-count">0</div>
+            </div>
+
+            <div class="stat-card">
+                <h3>Reviewed Today</h3>
+                <div class="value" id="reviewed-today">0</div>
+            </div>
+
+            <div class="stat-card">
+                <h3>Total Reviewed</h3>
+                <div class="value" id="total-reviewed">0</div>
+            </div>
+
+            <div class="stat-card">
+                <h3>AI Accuracy</h3>
+                <div class="value" id="ai-accuracy">0%</div>
+            </div>
+        </div>
+
+        <!-- Review Card -->
+        <div class="review-card" id="review-card" style="display: none;">
+            <h2>Case Review</h2>
+
+            <div class="review-content">
+                <div class="image-viewer">
+                    <img id="medical-image" class="medical-image" src="" alt="Medical Image">
+                    <div class="image-meta">
+                        <div id="image-filename"></div>
+                        <div id="upload-date"></div>
+                    </div>
+                </div>
+
+                <div class="review-details">
+                    <!-- Patient Info -->
+                    <div class="patient-info">
+                        <h4>Patient Information</h4>
+                        <div class="info-grid">
+                            <div class="info-item"><strong>Patient ID:</strong> <span id="patient-id"></span></div>
+                            <div class="info-item"><strong>Study Date:</strong> <span id="study-date"></span></div>
+                            <div class="info-item"><strong>Modality:</strong> <span id="modality"></span></div>
+                            <div class="info-item"><strong>Model Used:</strong> <span id="disease-type"></span></div>
+                        </div>
+                    </div>
+
+                    <!-- AI Prediction -->
+                    <div class="ai-prediction">
+                        <div class="prediction-header">
+                            <h3>🤖 AI Prediction</h3>
+                            <span class="confidence-badge" id="confidence-badge">0% Confidence</span>
+                        </div>
+                        <div style="font-size: 1.2em; margin: 10px 0; color: #FFFFFF;"><strong>Diagnosis:</strong> <span
+                                id="ai-diagnosis"></span></div>
+                        <div class="confidence-bar">
+                            <div class="confidence-fill" id="confidence-fill" style="width: 0%;"></div>
+                        </div>
+                    </div>
+
+                    <!-- Radiologist Label -->
+                    <div class="label-section">
+                        <h3>Your Diagnosis</h3>
+                        <p style="color: #D9D9D9; margin-bottom: 15px;">Select the correct diagnosis based on your
+                            expert review:</p>
+
+                        <div class="label-options">
+                            <div class="label-option" data-label="positive">
+                                ✓ Positive - Condition Present
+                            </div>
+                            <div class="label-option" data-label="negative">
+                                ✗ Negative - Condition Absent
+                            </div>
+                        </div>
+
+                        <div class="action-buttons">
+                            <button class="btn btn-secondary" onclick="skipCase()">Skip Case</button>
+                            <button class="btn btn-primary" id="submit-btn" onclick="submitReview()" disabled>
+                                Submit Review & Continue
+                            </button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Empty State -->
+        <div class="empty-state" id="empty-state" style="display: none;">
+            <h3>✅ All Cases Reviewed!</h3>
+            <p>No pending cases at the moment. Great work!</p>
+        </div>
+    </div>
+
+    <script>
+        let currentCase = null;
+        let selectedLabel = null;
+
+        // Initialize on page load
+        document.addEventListener('DOMContentLoaded', function () {
+            loadStatistics();
+            loadNextCase();
+
+            // Add click handlers for label options
+            document.querySelectorAll('.label-option').forEach(option => {
+                option.addEventListener('click', function () {
+                    selectLabel(this.getAttribute('data-label'));
+                });
+            });
+        });
+
+        function loadStatistics() {
+            fetch('/api/radiologist/stats')
+                .then(response => response.json())
+                .then(data => {
+                    document.getElementById('pending-count').textContent = data.pending_reviews || 0;
+                    document.getElementById('reviewed-today').textContent = data.reviewed_today || 0;
+                    document.getElementById('total-reviewed').textContent = data.total_reviewed || 0;
+                    document.getElementById('ai-accuracy').textContent = (data.ai_accuracy || 0) + '%';
+                })
+                .catch(error => {
+                    console.error('Error loading statistics:', error);
+                });
+        }
+
+        function loadNextCase() {
+            console.log('[Review Dashboard] Loading next case from API...');
+            fetch('/api/radiologist/pending-reviews?limit=1')
+                .then(response => {
+                    console.log('[Review Dashboard] API Response status:', response.status);
+                    return response.json();
+                })
+                .then(data => {
+                    console.log('[Review Dashboard] API Response data:', data);
+                    if (data.reviews && data.reviews.length > 0) {
+                        console.log('[Review Dashboard] Found', data.reviews.length, 'reviews');
+                        currentCase = data.reviews[0];
+                        displayCase(currentCase);
+                    } else {
+                        console.log('[Review Dashboard] No reviews found, showing empty state');
+                        showEmptyState();
+                    }
+                })
+                .catch(error => {
+                    console.error('[Review Dashboard] Error loading case:', error);
+                    showEmptyState();
+                });
+        }
+
+        function displayCase(caseData) {
+            document.getElementById('review-card').style.display = 'block';
+            document.getElementById('empty-state').style.display = 'none';
+
+            // Image - use the review ID from the API
+            const imageUrl = caseData.image_url || `/api/radiologist/image/${caseData.id}`;
+            document.getElementById('medical-image').src = imageUrl;
+            document.getElementById('image-filename').textContent = 'File: ' + (caseData.image_path || 'medical_image.jpg');
+            document.getElementById('upload-date').textContent = 'Uploaded: ' + new Date(caseData.timestamp || Date.now()).toLocaleString();
+
+            // Patient info
+            document.getElementById('patient-id').textContent = caseData.patient_id || 'Anonymous';
+            document.getElementById('study-date').textContent = new Date(caseData.timestamp || Date.now()).toLocaleDateString();
+            document.getElementById('modality').textContent = 'Medical Imaging';
+            document.getElementById('disease-type').textContent = caseData.model_used || caseData.disease_type || 'Unknown';
+
+            // AI Prediction
+            document.getElementById('ai-diagnosis').textContent = caseData.ai_prediction;
+            const confidence = Math.round(caseData.confidence * 100);
+            document.getElementById('confidence-badge').textContent = confidence + '% Confidence';
+            document.getElementById('confidence-fill').style.width = confidence + '%';
+
+            // Set confidence color
+            const fillElement = document.getElementById('confidence-fill');
+            if (confidence >= 80) {
+                fillElement.style.background = 'linear-gradient(135deg, #10b981 0%, #059669 100%)';
+            } else if (confidence >= 60) {
+                fillElement.style.background = 'linear-gradient(135deg, #f59e0b 0%, #d97706 100%)';
+            } else {
+                fillElement.style.background = 'linear-gradient(135deg, #ef4444 0%, #dc2626 100%)';
+            }
+
+            // Reset selection
+            selectedLabel = null;
+            document.querySelectorAll('.label-option').forEach(opt => opt.classList.remove('selected'));
+            document.getElementById('submit-btn').disabled = true;
+        }
+
+        function selectLabel(label) {
+            selectedLabel = label;
+
+            // Update UI
+            document.querySelectorAll('.label-option').forEach(option => {
+                if (option.getAttribute('data-label') === label) {
+                    option.classList.add('selected');
+                } else {
+                    option.classList.remove('selected');
+                }
+            });
+
+            // Enable submit button
+            document.getElementById('submit-btn').disabled = false;
+        }
+
+        function submitReview() {
+            if (!selectedLabel || !currentCase) {
+                alert('Please select a diagnosis first');
+                return;
+            }
+
+            // Semantic matching: "positive" means condition present, "negative" means healthy/normal
+            // AI predictions like "Fractured", "Pneumonia", "Malignant" = positive (disease present)
+            // AI predictions like "Normal", "Not Fractured", "Benign", "No Tumor" = negative (healthy)
+            const NEGATIVE_PREDICTIONS = ['normal', 'not fractured', 'benign', 'no tumor', 'no dr', 'negative', 'healthy', 'ct_noncovid'];
+            const aiPredLower = currentCase.ai_prediction.toLowerCase();
+            const aiIsNegative = NEGATIVE_PREDICTIONS.some(neg => aiPredLower.includes(neg));
+
+            // Agrees = both think positive OR both think negative
+            const radiologistThinkPositive = (selectedLabel === 'positive');
+            const aiThinkPositive = !aiIsNegative;
+            const agreesWithAI = (radiologistThinkPositive === aiThinkPositive);
+
+            const reviewData = {
+                review_id: currentCase.id,
+                action: 'confirm',
+                radiologist_label: selectedLabel,
+                ai_prediction: currentCase.ai_prediction,
+                confidence: currentCase.confidence,
+                agrees_with_ai: agreesWithAI,
+                notes: ''
+            };
+
+            const token = localStorage.getItem('access_token');
+            const headers = {
+                'Content-Type': 'application/json'
+            };
+            if (token) {
+                headers['Authorization'] = 'Bearer ' + token;
+            }
+
+            fetch('/api/radiologist/submit-review', {
+                method: 'POST',
+                headers: headers,
+                body: JSON.stringify(reviewData)
+            })
+                .then(response => response.json())
+                .then(data => {
+                    if (data.message || data.success !== false) {
+                        // Show brief success message
+                        const badge = selectedLabel.toLowerCase() === currentCase.ai_prediction.toLowerCase()
+                            ? '✓ Agrees with AI'
+                            : '⚠ Disagrees with AI';
+
+                        console.log('Review submitted:', badge);
+
+                        // Load next case after brief delay
+                        setTimeout(() => {
+                            loadStatistics();
+                            loadNextCase();
+                        }, 500);
+                    } else {
+                        alert('Error submitting review: ' + (data.error || 'Unknown error'));
+                    }
+                })
+                .catch(error => {
+                    console.error('Error submitting review:', error);
+                    alert('Error submitting review: ' + error.message);
+                });
+        }
+
+        function skipCase() {
+            if (confirm('Skip this case? It will remain in the queue.')) {
+                loadNextCase();
+            }
+        }
+
+        function showEmptyState() {
+            document.getElementById('review-card').style.display = 'none';
+            document.getElementById('empty-state').style.display = 'block';
+        }
+
+        // Keyboard shortcuts
+        document.addEventListener('keydown', function (event) {
+            if (event.key === '1') {
+                selectLabel('positive');
+            } else if (event.key === '2') {
+                selectLabel('negative');
+            } else if (event.key === 'Enter' && selectedLabel) {
+                submitReview();
+            } else if (event.key === 'Escape') {
+                skipCase();
+            }
+        });
+    </script>
+</body>
+
+</html>
