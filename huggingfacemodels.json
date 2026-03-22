@@ -1,0 +1,417 @@
+{
+    "total_found": 23,
+    "models": {
+        "dima806/chest_xray_pneumonia_detection": {
+            "downloads": 1231,
+            "tags": [
+                "transformers",
+                "pytorch",
+                "safetensors",
+                "vit",
+                "image-classification",
+                "base_model:google/vit-base-patch16-224-in21k",
+                "base_model:finetune:google/vit-base-patch16-224-in21k",
+                "license:apache-2.0",
+                "autotrain_compatible",
+                "endpoints_compatible",
+                "region:us"
+            ],
+            "search_term": "chest xray"
+        },
+        "prithivMLmods/Bone-Fracture-Detection": {
+            "downloads": 997,
+            "tags": [
+                "transformers",
+                "safetensors",
+                "siglip",
+                "image-classification",
+                "Bone",
+                "Fracture",
+                "Detection",
+                "SigLIP2",
+                "medical",
+                "biology",
+                "en",
+                "dataset:Hemg/bone-fracture-detection",
+                "base_model:google/siglip2-base-patch16-224",
+                "base_model:finetune:google/siglip2-base-patch16-224",
+                "doi:10.57967/hf/5383",
+                "license:apache-2.0",
+                "autotrain_compatible",
+                "endpoints_compatible",
+                "region:us"
+            ],
+            "search_term": "bone fracture"
+        },
+        "keremberke/yolov8m-chest-xray-classification": {
+            "downloads": 979,
+            "tags": [
+                "ultralytics",
+                "tensorboard",
+                "v8",
+                "ultralyticsplus",
+                "yolov8",
+                "yolo",
+                "vision",
+                "image-classification",
+                "pytorch",
+                "awesome-yolov8-models",
+                "dataset:keremberke/chest-xray-classification",
+                "model-index",
+                "region:us"
+            ],
+            "search_term": "chest xray"
+        },
+        "DunnBC22/vit-base-patch16-224-in21k_lung_and_colon_cancer": {
+            "downloads": 834,
+            "tags": [
+                "transformers",
+                "pytorch",
+                "tensorboard",
+                "vit",
+                "image-classification",
+                "generated_from_trainer",
+                "en",
+                "dataset:imagefolder",
+                "license:apache-2.0",
+                "model-index",
+                "autotrain_compatible",
+                "endpoints_compatible",
+                "region:us"
+            ],
+            "search_term": "lung"
+        },
+        "codewithdark/vit-chest-xray": {
+            "downloads": 825,
+            "tags": [
+                "transformers",
+                "safetensors",
+                "vit",
+                "image-classification",
+                "medical",
+                "biology",
+                "en",
+                "base_model:google/vit-base-patch16-224-in21k",
+                "base_model:finetune:google/vit-base-patch16-224-in21k",
+                "license:mit",
+                "autotrain_compatible",
+                "endpoints_compatible",
+                "region:us",
+                "deploy:azure"
+            ],
+            "search_term": "chest xray"
+        },
+        "1aurent/vit_large_patch14_reg4_224.kaiko_ai_towards_large_pathology_fms": {
+            "downloads": 403,
+            "tags": [
+                "timm",
+                "safetensors",
+                "feature-extraction",
+                "image-classification",
+                "arxiv:2404.15217",
+                "license:other",
+                "model-index",
+                "region:us"
+            ],
+            "search_term": "pathology"
+        },
+        "1aurent/vit_base_patch8_224.kaiko_ai_towards_large_pathology_fms": {
+            "downloads": 367,
+            "tags": [
+                "timm",
+                "safetensors",
+                "feature-extraction",
+                "image-classification",
+                "arxiv:2404.15217",
+                "license:other",
+                "model-index",
+                "region:us"
+            ],
+            "search_term": "pathology"
+        },
+        "andrei-teodor/vit-base-brain-mri": {
+            "downloads": 327,
+            "tags": [
+                "transformers",
+                "tensorboard",
+                "safetensors",
+                "vit",
+                "image-classification",
+                "generated_from_trainer",
+                "base_model:google/vit-base-patch16-224",
+                "base_model:finetune:google/vit-base-patch16-224",
+                "license:apache-2.0",
+                "autotrain_compatible",
+                "endpoints_compatible",
+                "region:us"
+            ],
+            "search_term": "brain mri"
+        },
+        "Devarshi/Brain_Tumor_Classification": {
+            "downloads": 262,
+            "tags": [
+                "transformers",
+                "pytorch",
+                "swin",
+                "image-classification",
+                "generated_from_trainer",
+                "dataset:imagefolder",
+                "license:apache-2.0",
+                "model-index",
+                "autotrain_compatible",
+                "endpoints_compatible",
+                "region:us"
+            ],
+            "search_term": "brain tumor"
+        },
+        "Alia-Mohammed/resnet-50-finetuned-brain-tumor": {
+            "downloads": 252,
+            "tags": [
+                "transformers",
+                "pytorch",
+                "tensorboard",
+                "resnet",
+                "image-classification",
+                "generated_from_trainer",
+                "dataset:imagefolder",
+                "license:apache-2.0",
+                "model-index",
+                "autotrain_compatible",
+                "endpoints_compatible",
+                "region:us"
+            ],
+            "search_term": "brain tumor"
+        },
+        "DunnBC22/vit-base-patch16-224-in21k_covid_19_ct_scans": {
+            "downloads": 249,
+            "tags": [
+                "transformers",
+                "pytorch",
+                "tensorboard",
+                "vit",
+                "image-classification",
+                "generated_from_trainer",
+                "en",
+                "dataset:imagefolder",
+                "license:apache-2.0",
+                "model-index",
+                "autotrain_compatible",
+                "endpoints_compatible",
+                "region:us"
+            ],
+            "search_term": "ct scan"
+        },
+        "Falah/vit-base-breast-cancer": {
+            "downloads": 244,
+            "tags": [
+                "transformers",
+                "pytorch",
+                "tensorboard",
+                "vit",
+                "image-classification",
+                "generated_from_trainer",
+                "dataset:imagefolder",
+                "license:apache-2.0",
+                "model-index",
+                "autotrain_compatible",
+                "endpoints_compatible",
+                "region:us"
+            ],
+            "search_term": "breast cancer"
+        },
+        "gulsmyigit/vit-base-patch16-224-finetuned-Brain-Tumor-Classification": {
+            "downloads": 240,
+            "tags": [
+                "transformers",
+                "tensorboard",
+                "safetensors",
+                "vit",
+                "image-classification",
+                "generated_from_trainer",
+                "dataset:imagefolder",
+                "base_model:google/vit-base-patch16-224",
+                "base_model:finetune:google/vit-base-patch16-224",
+                "license:apache-2.0",
+                "model-index",
+                "autotrain_compatible",
+                "endpoints_compatible",
+                "region:us"
+            ],
+            "search_term": "brain tumor"
+        },
+        "1aurent/vit_small_patch16_224.kaiko_ai_towards_large_pathology_fms": {
+            "downloads": 219,
+            "tags": [
+                "timm",
+                "safetensors",
+                "feature-extraction",
+                "image-classification",
+                "arxiv:2404.15217",
+                "license:other",
+                "model-index",
+                "region:us"
+            ],
+            "search_term": "pathology"
+        },
+        "Hemgg/bone-fracture-detection-using-xray": {
+            "downloads": 212,
+            "tags": [
+                "transformers",
+                "safetensors",
+                "vit",
+                "image-classification",
+                "generated_from_trainer",
+                "base_model:google/vit-base-patch16-224-in21k",
+                "base_model:finetune:google/vit-base-patch16-224-in21k",
+                "license:apache-2.0",
+                "autotrain_compatible",
+                "endpoints_compatible",
+                "region:us"
+            ],
+            "search_term": "bone fracture"
+        },
+        "AsmaaElnagger/Diabetic_RetinoPathy_detection": {
+            "downloads": 91,
+            "tags": [
+                "transformers",
+                "tensorboard",
+                "safetensors",
+                "dinov2",
+                "image-classification",
+                "generated_from_trainer",
+                "en",
+                "ar",
+                "dataset:imagefolder",
+                "base_model:facebook/dinov2-base",
+                "base_model:finetune:facebook/dinov2-base",
+                "license:gpl-3.0",
+                "model-index",
+                "autotrain_compatible",
+                "endpoints_compatible",
+                "region:us"
+            ],
+            "search_term": "diabetic retinopathy"
+        },
+        "keanteng/efficientnet-b0-breast-cancer-classification-0604-2": {
+            "downloads": 62,
+            "tags": [
+                "pytorch",
+                "safetensors",
+                "efficientnet",
+                "generative-ai",
+                "medical-imaging",
+                "deep-cnn",
+                "breast-cancer",
+                "classification",
+                "image-classification",
+                "dataset:keanteng/miniddbs-jpeg",
+                "license:agpl-3.0",
+                "region:us"
+            ],
+            "search_term": "breast cancer"
+        },
+        "ebmonser/lung-cancer-image-classification": {
+            "downloads": 39,
+            "tags": [
+                "transformers",
+                "tensorboard",
+                "safetensors",
+                "vit",
+                "image-classification",
+                "generated_from_trainer",
+                "dataset:imagefolder",
+                "base_model:google/vit-base-patch16-224-in21k",
+                "base_model:finetune:google/vit-base-patch16-224-in21k",
+                "license:apache-2.0",
+                "model-index",
+                "autotrain_compatible",
+                "endpoints_compatible",
+                "region:us"
+            ],
+            "search_term": "lung"
+        },
+        "sergiopaniego/fine_tuning_vit_custom_dataset_breastcancer-ultrasound-images": {
+            "downloads": 33,
+            "tags": [
+                "transformers",
+                "safetensors",
+                "vit",
+                "image-classification",
+                "arxiv:1910.09700",
+                "autotrain_compatible",
+                "endpoints_compatible",
+                "region:us"
+            ],
+            "search_term": "ultrasound"
+        },
+        "1aurent/vit_base_patch16_224.owkin_pancancer_ft_lc25000_lung": {
+            "downloads": 33,
+            "tags": [
+                "timm",
+                "safetensors",
+                "image-classification",
+                "owkin",
+                "biology",
+                "cancer",
+                "lung",
+                "dataset:1aurent/LC25000",
+                "base_model:1aurent/vit_base_patch16_224.owkin_pancancer",
+                "base_model:finetune:1aurent/vit_base_patch16_224.owkin_pancancer",
+                "license:other",
+                "model-index",
+                "region:us"
+            ],
+            "search_term": "lung"
+        },
+        "andrei-teodor/resnet-pretrained-brain-mri": {
+            "downloads": 22,
+            "tags": [
+                "transformers",
+                "tensorboard",
+                "safetensors",
+                "resnet",
+                "image-classification",
+                "generated_from_trainer",
+                "base_model:microsoft/resnet-50",
+                "base_model:finetune:microsoft/resnet-50",
+                "license:apache-2.0",
+                "autotrain_compatible",
+                "endpoints_compatible",
+                "region:us"
+            ],
+            "search_term": "brain mri"
+        },
+        "HumaP/vit-base-patch16-224-in21k-lung_and_colon_histopathology": {
+            "downloads": 16,
+            "tags": [
+                "transformers",
+                "tf",
+                "vit",
+                "image-classification",
+                "medical",
+                "autotrain_compatible",
+                "endpoints_compatible",
+                "region:us"
+            ],
+            "search_term": "histopathology"
+        },
+        "oohtmeel/swin-tiny-patch4-finetuned-lung-cancer-ct-scans": {
+            "downloads": 12,
+            "tags": [
+                "transformers",
+                "safetensors",
+                "swin",
+                "image-classification",
+                "medical",
+                "biology",
+                "Scans",
+                "CT",
+                "license:mit",
+                "autotrain_compatible",
+                "endpoints_compatible",
+                "region:us"
+            ],
+            "search_term": "ct scan"
+        }
+    }
+}

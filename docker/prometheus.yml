@@ -1,0 +1,8 @@
+global:
+  scrape_interval: 15s
+  evaluation_interval: 15s
+
+scrape_configs:
+  - job_name: 'medical-inference-server'
+    static_configs:
+      - targets: ['medical-inference-server:9090']
