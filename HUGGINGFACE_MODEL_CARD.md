@@ -20,7 +20,7 @@ pipeline_tag: image-classification
 
 **Production Medical AI Models for Federated Learning**
 
-This repository contains pre-trained medical imaging models used by [MedoraAI](https://github.com/TheTusharChopra/MedoraAI) - a privacy-preserving federated learning platform for healthcare.
+This repository contains pre-trained medical imaging models used by [MedoraAI](https://github.com/dhairyahuh/MedoraAI) - a privacy-preserving federated learning platform for healthcare.
 
 ---
 
@@ -52,11 +52,11 @@ from PIL import Image
 
 # Load model
 model = AutoModelForImageClassification.from_pretrained(
-    "tusharchopra01/Medora-Models",
+    "dhairyajain/Medora-Models",
     subfolder="models/weights/bone_fracture"
 )
 processor = AutoProcessor.from_pretrained(
-    "tusharchopra01/Medora-Models",
+    "dhairyajain/Medora-Models",
     subfolder="models/weights/bone_fracture"
 )
 
@@ -158,17 +158,14 @@ Performance on held-out test sets:
 
 ## 🔗 Related Links
 
-- **Main Project**: [github.com/TheTusharChopra/MedoraAI](https://github.com/TheTusharChopra/MedoraAI)
-- **Live Demo**: [http://34.131.184.2](http://34.131.184.2)
+- **Main Project**: [github.com/dhairyahuh/MedoraAI](https://github.com/dhairyahuh/MedoraAI)
+- **Live Demo**: [https://medoraai-eight.vercel.app](https://medoraai-eight.vercel.app)
 - **Documentation**: See project README
 
 ---
 
-## 👥 Contributors
+## 👥 Author
 
-**Team AlgoRhythm**
-- Tushar Chopra
-- Arshdeep Singh
 - Dhairya Jain
 
 ---
@@ -185,10 +182,9 @@ If you use these models in research, please cite:
 
 ```bibtex
 @software{medora_models_2026,
-  author = {Chopra, Tushar and Singh, Arshdeep and Jain, Dhairya},
+  author = {Jain, Dhairya},
   title = {Medora-Models: Federated Medical Imaging Models},
   year = {2026},
-  publisher = {Hugging Face},
-  url = {https://huggingface.co/tusharchopra01/Medora-Models}
+  url = {https://github.com/dhairyahuh/MedoraAI}
 }
 ```

@@ -4,10 +4,10 @@ Test script to verify federated learning is working
 Tests the complete flow from gradient contribution to model update
 """
 import sys
-sys.path.insert(0, '/Users/tusharchopra/Downloads/MedoraAI')
+from pathlib import Path
+sys.path.insert(0, str(Path(__file__).resolve().parent.parent))
 
 import torch
-from pathlib import Path
 from collections import OrderedDict
 import config
 from federated.federated_storage import FederatedStorage

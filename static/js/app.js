@@ -1,28 +1,28 @@
 // Medical AI Platform - Frontend JavaScript
 // Professional, minimal implementation
 
-const API_BASE = window.location.origin;
+const API_BASE = window.MEDORA_API_URL || localStorage.getItem('api_base') || window.location.origin;
 let currentFile = null;
 
-// Check authentication on page load
-function checkAuth() {
-    const token = localStorage.getItem('access_token');
-    if (!token) {
-        // Not logged in, redirect to login
-        window.location.href = '/login.html';
-        return false;
-    }
-    return true;
-}
-
-// Run auth check immediately
-if (!checkAuth()) {
-    // Stop executing the rest of the script
-    throw new Error('Authentication required');
+// Check authentication status
+function isAuthenticated() {
+    return !!localStorage.getItem('access_token');
 }
 
 // Wait for DOM to be ready
 document.addEventListener('DOMContentLoaded', function () {
+    // Dynamic navigation button state
+    const navBtn = document.querySelector('.btn-nav-primary');
+    if (navBtn) {
+        if (isAuthenticated()) {
+            navBtn.textContent = 'Sign Out';
+            navBtn.onclick = logout;
+        } else {
+            navBtn.textContent = 'Portal Login';
+            navBtn.onclick = () => { window.location.href = '/login.html'; };
+        }
+    }
+
     // DOM Elements - with null checks
     const uploadArea = document.getElementById('uploadArea');
     const fileInput = document.getElementById('fileInput');
@@ -40,11 +40,9 @@ document.addEventListener('DOMContentLoaded', function () {
 
     function loadSystemStats() {
         const token = localStorage.getItem('access_token');
-        if (!token) return;
+        const headers = token ? { 'Authorization': `Bearer ${token}` } : {};
 
-        fetch(`${API_BASE}/api/v1/federated/hospitals`, {
-            headers: { 'Authorization': `Bearer ${token}` }
-        })
+        fetch(`${API_BASE}/api/v1/federated/hospitals`, { headers })
             .then(response => response.json())
             .then(data => {
                 const countElement = document.getElementById('active-hospitals-count');
@@ -210,7 +208,7 @@ document.addEventListener('DOMContentLoaded', function () {
 
         } catch (error) {
             console.error('Analysis error:', error);
-            showNotification('Analysis failed. Please try again.', 'error');
+            showNotification(error.message || 'Analysis failed. Please check connection.', 'error');
         } finally {
             showLoading(false);
         }

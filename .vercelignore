@@ -1,0 +1,36 @@
+# Large model weights and data
+models/weights/
+model_pneumonia/
+federated_data/
+backups/
+uploads/
+logs/
+labeled_data.db
+test_results*.txt
+
+# Python environments and caches
+.venv/
+__pycache__/
+*.pyc
+
+# Certificates and keys
+certs/
+security/keys/
+*.pem
+*.key
+.env
+.env.*
+
+# Python source files that Vercel should not compile as Python serverless functions
+api/**/*.py
+api/__init__.py
+main.py
+config.py
+config_production.py
+health_check.py
+
+# Docker, GCP, Azure scripts
+docker/
+deploy/
+scripts/
+tests/

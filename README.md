@@ -2,14 +2,22 @@
 
 **A Privacy-Preserving Federated Learning Platform for Medical Imaging**
 
+[![Vercel Deployment](https://img.shields.io/badge/Vercel-Live%20Demo-0070F3?style=for-the-badge&logo=vercel&logoColor=white)](https://medoraai-eight.vercel.app)
+[![GitHub](https://img.shields.io/badge/GitHub-Repository-181717?style=for-the-badge&logo=github&logoColor=white)](https://github.com/dhairyahuh/MedoraAI)
+
+[**🚀 Explore Live Demo**](https://medoraai-eight.vercel.app) | [**GitHub Repository**](https://github.com/dhairyahuh/MedoraAI)
+
 MedoraAI is a production-ready medical image analysis system that enables hospitals to collaboratively improve AI models **without sharing patient data**. The platform combines real-time inference, radiologist-in-the-loop learning, and differential privacy protection.
 
 ---
 
 ## 🚀 Live Demo
 
-**Deployed on Google Cloud Platform**  
-🌐 [http://34.131.184.2](http://34.131.184.2)
+- 🌐 **Production Web Application**: [https://medoraai-eight.vercel.app](https://medoraai-eight.vercel.app)
+- 🏥 **Hospital Portal & Diagnostics**: [https://medoraai-eight.vercel.app/login.html](https://medoraai-eight.vercel.app/login.html)
+- 🔗 **Federated Learning Network**: [https://medoraai-eight.vercel.app/federated.html](https://medoraai-eight.vercel.app/federated.html)
+- 👨‍⚕️ **Radiologist Review Queue**: [https://medoraai-eight.vercel.app/radiologist_review.html](https://medoraai-eight.vercel.app/radiologist_review.html)
+- 🏢 **Hospital Node Onboarding**: [https://medoraai-eight.vercel.app/hospital_onboarding.html](https://medoraai-eight.vercel.app/hospital_onboarding.html)
 
 ---
 
@@ -126,7 +134,7 @@ MedoraAI/
 
 ```bash
 # Clone repository
-git clone https://github.com/TheTusharChopra/MedoraAI.git
+git clone https://github.com/dhairyahuh/MedoraAI.git
 cd MedoraAI
 
 # Setup environment
@@ -139,13 +147,10 @@ python -m uvicorn main:app --host 0.0.0.0 --port 8000
 
 ---
 
-## 👤 Contributors
+## 👤 Author
 
-**Team AlgoRhythm**
-
-**Tushar Chopra**  
-**Arshdeep Singh**\
 **Dhairya Jain**  
+[GitHub Profile](https://github.com/dhairyahuh)
 
 ---
 

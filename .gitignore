@@ -1,0 +1,22 @@
+.DS_Store
+**/.DS_Store
+# environments
+.venv/
+__pycache__/
+
+# large model/data folders (HF only)
+models/
+model_pneumonia/
+federated_data/
+
+# runtime junk
+logs/
+uploads/
+backups/
+
+# secrets
+*.pem
+*.key
+.env
+.vercel
+.env*
